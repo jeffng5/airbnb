@@ -13,9 +13,9 @@ const PORT = +process.env.PORT || 3001;
 function getDatabaseUri() {
   return (
     process.env.NODE_ENV === "test")
-      ? "blackDiamond_test"
+      ? "blackdiamond_test"
       : 
-      process.env.DATABASE_URL || "blackDiamond";
+      process.env.DATABASE_URL || "blackdiamond";
 }
 
 // Speed up bcrypt during tests, since the algorithm safety isn't being tested

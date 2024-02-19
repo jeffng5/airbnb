@@ -13,9 +13,34 @@ app.use(cors());
 // const { createToken } = require('./helpers/tokens')
 
 const pgp = require('pg-promise')(/* options */)
-const db = pgp("postgresql://jeffreyng:beachbodyp90x@127.0.0.1:5433/blackDiamond")
+const db = pgp("postgresql://jeffreyng:beachbodyp90x@127.0.0.1:5433/blackdiamond")
 
+app.post('/users', async function (req, res, next) {
+    try {
+        const {firstname, lastname, email, checkin, checkout} = req.body
+        console.log(req.body)
+        const makeReservation = await db.query(`INSERT into reservation (firstname, lastname, email, checkin, checkout) VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+        [firstname, lastname, email, checkin, checkout])
+        console.log(makeReservation)
+    if (makeReservation) {
+        return res.status(201).json(makeReservation)
+    }
+    } catch (err) {return next(err)}
 
+})
+
+app.get('/users/reservation', async function (req, res, next) {
+    try {
+        const { id } = req.query
+        console.log('where am i', id)
+        const getReservation = await db.query(`SELECT * from reservation WHERE id = $1`, [id])
+        let resnumber = getReservation;
+        console.log(resnumber)
+        return res.json({resnumber});
+    } catch (err) {
+        return next(err)
+    }
+})
 
 
 

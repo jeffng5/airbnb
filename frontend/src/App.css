@@ -32,6 +32,18 @@ width: 40%;
 display: inline-block;
 }
 
+div.share {
+display: inline-block;
+}
+
+
+div.pics {
+display:inline-table;
+width: 300px;
+height: 250px;
+padding: 10px;
+
+}
 
 button {
   border-radius: 10px;
@@ -39,4 +51,25 @@ button {
   background-color: coral;
   width: 150px;
   height: 35px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+input {
+  font-size: 19px;
+}
+
+
+p{
+  color: green;
+}
+
+figcaption {
+  text-align: center;
+}
+
+h2 {
+  font-weight: 300;
+  padding-left: 250px;
+  padding-right: 250px;
 }
