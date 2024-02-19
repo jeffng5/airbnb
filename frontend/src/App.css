@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: white;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -17,14 +18,39 @@
     transform: rotate(360deg);
   }
 }
+body {
+  background-color: white;
+  background-size: cover;
+  width: 100%;
+}
+img#fixed-bg {
+  margin-bottom:-500px;
+  width: 1700px;
+  height: 1000px;
+  text-align: center;
+  opacity: 0.7;
+;
 
+}
+
+img.photos {
+  border-radius: 16px;
+  height: 400px;
+}
 
 div {
   padding: 10px;
   text-align: center;
 }
 
+div.amenities {
+  display: inline-block;
+  grid-template-columns: repeat(2, 500px);
+  text-align: left;
+  }
+
 div.container {
+background-color: white;
 margin-top: 40px;
 border: solid black 1px;
 border-radius: 10px;
@@ -36,13 +62,37 @@ div.share {
 display: inline-block;
 }
 
-
-div.pics {
-display:inline-table;
-width: 300px;
-height: 250px;
+div.card {
+  overflow: hidden;
+  position: relative;
+  /* background: url(../public/livingroom.png); */
+  background-color: #ffffff;
+  background-size: cover;
+  border: 1px solid black;
+  align-content: center;
+  margin-left: 300px;
+  margin-right: 300px;
+  border-radius: 16px;
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+div.interior {
+border-radius: 16px;
+display: block;
 padding: 10px;
+background-color: white;
+border: 1px solid black;
+margin-left: 300px;
+margin-right: 300px;
+}
 
+div.nav {
+  width: 100%;
+  border-bottom: 1px solid black;
+  text-align: left;
+  text-decoration: none;
+  margin-right: 20px;
+  padding-bottom: 40px;
 }
 
 button {
@@ -66,10 +116,61 @@ p{
 
 figcaption {
   text-align: center;
+  font-size: 25px;
+  font-weight: 300;
+  padding-bottom: 35px;
 }
-
+h1 {
+  color: black;
+}
 h2 {
+  color: black;
   font-weight: 300;
   padding-left: 250px;
   padding-right: 250px;
+}
+
+h2.block {
+  color: black;
+}
+h2.links{
+  text-decoration: none;
+}
+
+li {
+  display: block;
+}
+
+h3 {
+font-weight: 300;
+font-size: 22px;
+
+}
+h4 {
+  color: black;
+  display: block;
+  grid-template-columns: 400px 400px;
+  font-size: 25px;
+  font-weight: 300;
+}
+
+span {
+font-size: 19px;
+padding-left: 100px;
+text-decoration: none;
+}
+
+p.location {
+  position: relative;
+  bottom: 250px;
+
+}
+
+p.location-1 {
+  position: relative;
+  bottom: 470px;
+}
+
+b {
+  color: navy;
 }

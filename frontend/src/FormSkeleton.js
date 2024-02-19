@@ -16,7 +16,6 @@ const FormSkeleton = () => {
   async function handleForm(e) {
       e.preventDefault();
       const res = await Helpers.postReserve(formData.firstname, formData.lastname, formData.email, formData.checkin, formData.checkout)
-    
       localStorage.setItem('resid', res[0].id)
       navigate('reservation')
 

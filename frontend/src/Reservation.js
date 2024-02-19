@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import {Helpers} from './helpers'
 import './App.css'
 
-let id = localStorage.getItem('resid')
-console.log(id)
+
+
 
 const Reservation = () => {
-
+    let id = localStorage.getItem('resid')
+    console.log(id)
     const [resdata, setResData] = useState([])
 
     useEffect(()=> {

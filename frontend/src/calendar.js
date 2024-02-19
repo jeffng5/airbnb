@@ -1,6 +1,7 @@
 import React from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+import './App.css'
 
 const Calendar = () => {
 
@@ -10,6 +11,7 @@ const Calendar = () => {
 
 
     return (
+      <body>
       <FullCalendar
         plugins={[ dayGridPlugin ]}
         initialView="dayGridMonth"
@@ -19,6 +21,7 @@ const Calendar = () => {
     
     ]}
       />
+      </body>
     )
   }
 

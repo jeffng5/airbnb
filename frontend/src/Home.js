@@ -4,7 +4,7 @@ import React from 'react'
 const Home = () => {
 
 return (
-<h1> Welcome to Black Diamond Escapes</h1>
+<h1> Welcome to Black Diamond Escape</h1>
 
 )
 

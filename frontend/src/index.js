@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './Home'
+import Bio from './Bio'
+import Gallery from './Gallery'
 import Reservation from './Reservation';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,7 +17,9 @@ root.render(
   </React.StrictMode>
 <Routes>
 <Route path = "/users" exact element = {<App />}></Route>
-<Route path = "/users/reservation" exact element ={<Reservation />}></Route>
+<Route path = "/reservation" exact element ={<Reservation />}></Route>
+<Route path = '/gallery' exact element= {<Gallery />}></Route>
+<Route path = "/about" exact element= {<Bio />}></Route>
 </Routes>
 </BrowserRouter> 
 
