@@ -1,3 +1,4 @@
+
 import axios from 'axios'
 
 
@@ -36,5 +37,12 @@ static async getReserve(id) {
     console.log(res.data, "fetching posts")
     return res.data
 }
+
+static async getAllReserve() {
+    let res= await this.request('users')
+    console.log(res.data, 'fetching all reservation dates')
+    return res.data
+}
+
 
 }

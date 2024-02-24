@@ -17,7 +17,7 @@ root.render(
   </React.StrictMode>
 <Routes>
 <Route path = "/users" exact element = {<App />}></Route>
-<Route path = "/reservation" exact element ={<Reservation />}></Route>
+<Route path = "/users/reservation" exact element ={<Reservation />}></Route>
 <Route path = '/gallery' exact element= {<Gallery />}></Route>
 <Route path = "/about" exact element= {<Bio />}></Route>
 </Routes>

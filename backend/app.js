@@ -29,6 +29,17 @@ app.post('/users', async function (req, res, next) {
 
 })
 
+app.get('/users', async function (req, res, next) {
+    try {
+        const getAllReservations = await db.query(`SELECT checkin, checkout from reservation`)
+        let results = getAllReservations;
+        console.log(results)
+        return res.json({results})
+    } catch (err) {
+        return next(err)
+    }
+})
+
 app.get('/users/reservation', async function (req, res, next) {
     try {
         const { id } = req.query
