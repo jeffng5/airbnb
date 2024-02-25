@@ -23,7 +23,7 @@ body {
   background-size: cover;
   width: 100%;
 }
-img#fixed-bg {
+#fixed-bg {
   margin-bottom:-500px;
   width: 1700px;
   height: 1000px;
@@ -33,7 +33,7 @@ img#fixed-bg {
 
 }
 
-img.photos {
+.photos {
   border-radius: 16px;
   height: 400px;
 }
@@ -43,26 +43,26 @@ div {
   text-align: center;
 }
 
-div.amenities {
+.amenities {
   display: inline-block;
   grid-template-columns: repeat(2, 500px);
   text-align: left;
   }
 
-div.container {
+.container {
 background-color: white;
 margin-top: 40px;
 border: solid black 1px;
 border-radius: 10px;
-width: 40%;
+width: 30%;
 display: inline-block;
 }
 
-div.share {
+.share {
 display: inline-block;
 }
 
-div.card {
+.card {
   overflow: hidden;
   position: relative;
   /* background: url(../public/livingroom.png); */
@@ -76,7 +76,7 @@ div.card {
   margin-bottom: 40px;
   margin-top: 40px;
 }
-div.interior {
+.interior {
 border-radius: 16px;
 display: block;
 padding: 10px;
@@ -86,7 +86,7 @@ margin-left: 300px;
 margin-right: 300px;
 }
 
-div.nav {
+.nav {
   width: 100%;
   border-bottom: 1px solid black;
   text-align: left;
@@ -130,10 +130,10 @@ h2 {
   padding-right: 250px;
 }
 
-h2.block {
+.block {
   color: black;
 }
-h2.links{
+.links{
   text-decoration: none;
 }
 
@@ -160,13 +160,13 @@ padding-left: 100px;
 text-decoration: none;
 }
 
-p.location {
+.location {
   position: relative;
   bottom: 250px;
 
 }
 
-p.location-1 {
+.location-1 {
   position: relative;
   bottom: 470px;
 }

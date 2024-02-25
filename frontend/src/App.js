@@ -46,10 +46,10 @@ function App() {
  <FullCalendar 
   
     plugins = {[ dayGridPlugin ]} 
-    initialView='dayGridMonth'
+    // initialView='dayGridMonth'
     events = 
       {
-        [
+         [
       
       {
       title : '', 
@@ -58,8 +58,8 @@ function App() {
         },
         {
       title: '',
-      start: resdata[1].checkin.substrung(0,10),
-      end : resdata[1].checkin.substring(0,10)
+      start: resdata[1].checkin.substring(0,10),
+      end : resdata[1].checkout.substring(0,10)
         }
       ]
 
