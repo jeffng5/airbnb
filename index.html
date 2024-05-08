@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+    <script src='/gallery.js'></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <p>
+    Welcome to Black Diamond Escape
+    </p>
+    <div class="column">
+    <img src="./images/exterior.png" alt="exterior" width="600" height="700"/>
+   
+    <div>
+    <a href='/about.html' About>ABOUT</a>
+</div>
+<div>
+    <a href='/index.html' Make reservation>RESERVATION</a>
+</div>
+<div>
+    <div onclick="createGallery()">GALLERY</div>
+</div>
+<div>
+    <a href= '/index.html' Testimonials>TESTIMONIALS</a>
+</div>
+<div>
+    <a href= '/index.html' Contact Us>CONTACT US</a>
+</div>
+</div>
+    <script>
+
+     
+
+      const code = document.getElementById("code");
+
+      function addToOutput(s) {
+        output.value += ">>>" + code.value + "\n" + s + "\n";
+      }
+
+      output.value = "Initializing...\n";
+      // init Pyodide
+      async function main() {
+        let pyodide = await loadPyodide();
+        output.value += "Ready!\n";
+        return pyodide;
+      }
+      let pyodideReadyPromise = main();
+
+      async function evaluatePython() {
+        let pyodide = await pyodideReadyPromise;
+        try {
+          let output = pyodide.runPython(code.value);
+          addToOutput(output);
+        } catch (err) {
+          addToOutput(err);
+        }
+      }
+    </script>
+  </body>
+</html>
