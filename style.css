@@ -57,7 +57,7 @@ div {
 .column {
     grid-template-columns: 350px, 350px;
     width:50%;
-    display: block;
+    display: flex;
 }
 
 .panels {
@@ -76,4 +76,8 @@ button {
     color: lightgreen;
     border-color: black;
     border-style: hidden;
+    display: block;
+    margin-bottom: 50px;
+    margin-top: 15px;
 }
+

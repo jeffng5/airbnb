@@ -13,8 +13,7 @@ function createGallery() {
     console.log(buildGallery)
     let arr = [...buildGallery];
     galleryArr.forEach(ele => {mountPic(ele)})
-    arr[2].addEventListener('click', function(e) {e.preventDefault();
-    toggleGallery()})};
+    arr[2].addEventListener('click', function(e) {e.preventDefault();toggleGallery()})};
 
 
 function mountPic(ele) {
@@ -49,4 +48,4 @@ function toggleGallery() {
 
   
 
-createGallery()
+createGallery();
