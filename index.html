@@ -3,7 +3,7 @@
 
 <head>
     <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
-
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -20,7 +20,7 @@
         </div>
         <div>
     
-            <button>RESERVATION</button>
+        <button><a href='reservation.html'> </a>RESERVATION</button>
         </div>
         <div>
             <button>GALLERY</button>
@@ -44,10 +44,28 @@
     <h2 class="gallery" style="display: none;"></h2>
     <h2 class= "reviews" style="display: none;"></h2>
 
+  
 
+    <div class='form-for-email'>
+        <h2>CONTACT:</h2>
+        <form action="mailto:gina.valmoria@gmail.com" method="post" enctype="text/plain">
+    <h2>Name:</h2>
+    <input class= 'form' type="text" name="name" size='50'><br>
+    <h2>E-mail:</h2>
+    <input class= 'form' type="text" name="mail" size="50"><br>
+    <h2>Message:</h2>
+    <textarea class= 'form' type="text" name="Message" rows="9" cols="80"></textarea>
+    
+    <input class= 'form' id= "form" type="submit" value="Send">
+    <input class= 'form' id= 'form' type="reset" value="Reset">
+    </form>
+    </div>
     <script src="gallery.js"></script>
     <script src="about.js"></script>
     <script src="reviews.js"></script>
+    <script src="reservation.js"></script>
+
+
 </body>
 
 </html>

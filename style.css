@@ -1,17 +1,49 @@
 body {
-    background-color: black;
+    background-color: white;
 }
 
 h1 {
     font-size: 30px;
-    color: lightgreen;
+    color: forestgreen;
     font-family: Arial;
     font-weight: 30;
 }
 
+h2 {
+    color: forestgreen;
+    font-size: 30px;
+    margin-left: 100px;
+    font-family: Arial;
+    font-weight: 100;
+}
+
+.form {
+    margin-left: 100px;
+    display: block;
+}
+
+.form-for-email {
+    border-radius: 10px;
+    margin-left: 250px;
+    margin-right: 250px;
+    border: 2px white solid;
+    padding-bottom: 20px;
+    margin-top: 20px;
+
+}
+
+#form {
+    margin-top: 20px;
+    margin-right: 600px;
+}
+
 .gallery {
-    display: flexbox;
+    display: flex;
     grid-template-columns: 300px, 300px, 300px;
+    margin-left: 340px;
+    margin-right: 340px;
+    margin-top: 50px;
+    padding-bottom: 50px;
 }
 
 .enlarged {
@@ -21,7 +53,7 @@ h1 {
 
 p {
     font-size: 60px;
-    color: lightgreen;
+    color: forestgreen;
     font-family: Arial;
     margin-left: 150px;
     font-weight: 50;
@@ -50,7 +82,7 @@ div {
     margin-left: 20px;
     font-size: 30px;
     font-family: Arial;
-    color: lightgreen;
+    color: forestgreen;
     
 }
 
@@ -70,14 +102,19 @@ a {
 }
 
 button {
-    background-color: black;
+    background-color: white;
     font-family: Arial;
     font-size: 30px;
-    color: lightgreen;
-    border-color: black;
+    color: forestgreen;
+    border-color: white;
     border-style: hidden;
     display: block;
     margin-bottom: 50px;
     margin-top: 15px;
 }
 
+.about {
+    padding-bottom: 60px;
+    margin-left: 340px;
+    margin-right: 340px;
+}
