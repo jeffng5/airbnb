@@ -1,6 +1,4 @@
 
-
-
 function showAbout() {
     const showAboutButton = document.getElementsByTagName('button')
     console.log(showAboutButton)
@@ -30,5 +28,6 @@ function toggleText() {
 
 }
 
-
+if (typeof document !== 'undefined') {
 showAbout()
+}

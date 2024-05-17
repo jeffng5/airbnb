@@ -1,3 +1,4 @@
+
 const galleryArr = [
     'backyard.png', 'bedroom.png', 'bedroom1.png', 'diningroom.png',
     'foyer.png', 'gameroom.png', 'gameroom2.png', 'kitchen.png', 'kitchen-coffee.png', 'livingroom.png', 'patio.png', 'patio1.png'
@@ -20,7 +21,7 @@ function mountPic(ele) {
     const img = document.createElement('img');
     let h2 = document.getElementsByTagName('h2') 
     h2[0].appendChild(img)
-    img.setAttribute('src', '/images/' + ele)
+    img.setAttribute('src', './images/'+ele)
     img.innerHTML += ` onclick="toggleEnlarged(img)"`
     img.classList.add("enlarged") 
     img.addEventListener('click', function(e) {e.preventDefault();

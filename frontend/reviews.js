@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const reviewsList ={ 'Justin' : 'Awesome features like retro games . House is very clean and bathrooms kept nice and clean.', 'Hailey': 'We had a great stay! It was clean and exactly like the pictures. The mountains nearby are beautiful to drive through. Definitely would stay again if we are back!', 'Angel': 'We always love to come back to this place', 'Angel' : 'Always satisfied with the accommodation', 'SuzanneMontana20' : 'Great proximity to Belleayre mtn. Beautiful Home. Game room was very cool! Only negative was no dryer. It rained on the mtn and our clothes were soaked. There was no wood either. We had to run out to get wood and the rotate our clothes to dry so we could hit the mtn the next day.', 'Angel' : 'This place is amazing, we always love to come back. Thank you Gina', 'David' : "My family had a wonderful stay at Gina's. Even though it was kind of cold on the first floor, the rooms were warm and the beds were comfortable. The kids thoroughly enjoyed the game room and enjoyed the board games as well! Gina was very responsive to any of my questions or concerns I had.", 'Jennifer' : `We had such a fun time! When not on the mountain, we watched movies and played games. This place is great for teens! Spacious. Quiet for the adults :)
 `, 'Victoria' : 'Cute place. Liked how it was decorated. Games were fun and unique. Easy to reach host and very responsive. Would definitely stay again.', 'Greg' : 'Nice place to stay for the night!', 'Steph': 'Only stayed for one night but it was great value and super close to Plattekill mountain for snowboarding! Host provides lots of amenities in the home. A nice place to stay with a group of friends.', 'Jian': 'Overall a clean place and was ok. did have a very dirty pot. Very creaky bunk bed. no instructions on using the furnace. Maybe a lighter or something to split the wood would be helpful. Also someone had setup an alarm at 6am waking up most of us.', 'Meghan' : 'We loved our stay at Gina’s place. Everything was exactly as listed. Only downside was that it was too cold to use the downstairs. But it was also only 5 degrees outside, so it’s understandable. The kids loved the video games, and there was room for them to go sledding. Will definitely be back!', 'Rebecca': 'Great location to the mountains and a beautiful, clean house.', 'Jennifer': `We had a great stay at Gina's home. We traveled with our three teenagers who loved the game room and foosball table. The house is conveniently located near Plattekill mountain and short drive to Belleayre Mountain for skiing. Great restaurants nearby for our dinners out. If traveling during the holiday week definitely remember to make dinner reservations if you have a group.`, 'Audra': `We enjoyed our stay, the game room was super fun!
 The host was flexible and kind in offering us the ability to check in earlier because it was pouring rain all day, which hindered our plans of hiking and being outdoors, which we very much appreciated.
@@ -30,8 +32,8 @@ function toggleText() {
 }
 
 function createReviews() {
-    const mapped = Object.entries(reviewsList).map(([k,v]) = `${k}_${v}`);
-    console.log(mapped)
+    // const mapped = Object.entries(reviewsList).map(([k,v]) = `${k}_${v}`);
+    // console.log(mapped)
     const reviews = document.getElementsByClassName('reviews')
 
 
