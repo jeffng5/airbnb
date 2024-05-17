@@ -21,7 +21,7 @@ console.log(password)
 //   });
 // } else {
   db = new Client({
-    connectionString: `postgresql://${USER}:beachbodyp90x@127.0.0.1:5431/blackdiamond`
+    connectionString: `postgresql://${USER}:${password}@127.0.0.1:${DATABASE_PORT}/postgres`
   });
 // }
 
