@@ -1,13 +1,16 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "description": "",
   "main": "about.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node about.js"
+    "start": "parcel index.html"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
 }

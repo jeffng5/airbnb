@@ -1,6 +1,7 @@
 import { Helpers } from './helpers'
 
 let date = new Date();
+console.log(date.getDate())
 let year = date.getFullYear();
 let month = date.getMonth();
  
@@ -61,7 +62,9 @@ const manipulate = () => {
             && year === new Date().getFullYear()
             ? "active"
             : "";
-        lit += `<li class="${isToday}">${i}</li>`;
+        
+        // lit += `<li class="${isToday}" id=${i}>${i}</li>`;
+        lit += `<li id=${i}>${i}</li>`
     }
  
     // Loop to add the first dates of the next month
@@ -129,12 +132,36 @@ async function getValues() {
 async function bookReservation() {
     let button = document.getElementById('reserve')
     console.log(button)
-    button.addEventListener('click', function(e) {e.preventDefault(); getValues(); } )    
-
-
-    
-    
+    button.addEventListener('click', function(e) {e.preventDefault(); getValues(); } )        
 }
 
+async function lookUpAll() {
+    let res = await Helpers.getDatabase()
+    console.log(res)
+    for (let x of res ) {
+        console.log(x.checkin.slice(-16,-14), x.checkout.slice(-16,-14))
+        const checkinDateMap = Number(x.checkin.slice(-16,-14))
+        console.log(typeof(checkinDateMap))
+        const checkoutDateMap = Number(x.checkout.slice(-16,-14))
+        const difference = checkoutDateMap - checkinDateMap
+        console.log(difference)
+        for (let i= checkinDateMap; i < difference ; i++) {
+            let date= document.getElementById(`${i}`)
+            console.log(date)
+            let month = document.getElementsByClassName('inactive')
+            
+            month[0].style.color = 'red'
+            date.style.textDecoration = 'line-through'
+        }
+    }
+}
+    
+
+    
+
+
+
+
+
 bookReservation()
-;
+lookUpAll();
