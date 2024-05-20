@@ -127,32 +127,46 @@ async function getValues() {
     let checkin = document.getElementById('checkin').value;
     console.log(checkin)
     let checkout = document.getElementById('checkout').value;
-    let bookedDate = document.getElementsByClassName('booked');
-    console.log(bookedDate)
 
-    
 
-    let reservations = await Helpers.getAllReservations()
+
+
+
+
     async function checkForOverlap() {
-        
-        for (let reservation of reservations) {
-            const checkinDateObject = new Date(reservation.checkin)
-            for (let i = 0; i< bookedDate.length; i++) {
-            if (checkinDateObject == bookedDate[i] ) {
-                console.log(bookedDate[i])
-                return 'Reservation cannot be made due to booking conflict'
-            }
-        //     else{
-        //         let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
-        //         console.log(res)
-        //     }
-        }
-    }
+        let bookedDate = document.getElementsByClassName('booked');
+        console.log(bookedDate[0].id)
 
+        let reservations = await Helpers.getAllReservations()
+        for (let i = 0; i < bookedDate.length; i++) {
+            for (let reservation of reservations) {
+
+                const checkinDateObject = new Date(reservation.checkin)
+                console.log(checkinDateObject.getDate())
+                console.log(bookedDate[i].id)
+
+                if (checkinDateObject.getDate() == bookedDate[i].id) {
+                    return console.log('reservation has a conflict')
+
+                }
+                else {
+                    continue
+                }
+            }
         }
-        checkForOverlap()
+        let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
+        console.log(res)
+
+
+
     }
-   
+    checkForOverlap()
+}
+
+
+
+
+
 
 
 async function bookReservation() {
@@ -170,19 +184,20 @@ async function lookUpAll() {
     for (let reservation of reservations) {
         const checkinDateObject = new Date(reservation.checkin)
         const checkinDay = checkinDateObject.getDate()
-        const checkoutDateObject = new Date(reservation.checkout)      
+        const checkoutDateObject = new Date(reservation.checkout)
         const checkoutDay = checkoutDateObject.getDate()
         const difference = checkoutDay - checkinDay
- 
+
 
         if (checkoutDateObject.getMonth() !== checkinDateObject.getMonth() && checkoutDateObject.getMonth() == currentMonth) {
             for (let i = 1; i <= checkoutDay; i++) {
 
                 let reservation = document.getElementById(`${i}`)
+                reservation.className = 'booked'
                 reservation.style.textDecoration = 'line-through'
                 reservation.style.textDecorationThickness = '4px'
                 reservation.style.textDecorationColor = 'red'
-                reservation.className='booked'
+
             }
         }
         if (checkoutDateObject.getMonth() !== checkinDateObject.getMonth() && checkinDateObject.getMonth() == currentMonth) {
@@ -194,20 +209,22 @@ async function lookUpAll() {
             let dayend = new Date(year, month, lastdate).getDay();
             if (checkinDay === dayend) {
                 let reservation = document.getElementById(`${checkinDay}`)
+                reservation.className = 'booked'
                 reservation.style.textDecoration = 'line-through'
                 reservation.style.textDecorationThickness = '4px'
                 reservation.style.textDecorationColor = 'red'
-                reservation.className = 'booked'
+
             }
 
             else {
                 for (let i = checkinDay; i <= dayend; i++) {
 
                     let reservation = document.getElementById(`${i}`)
+                    reservation.className = 'booked'
                     reservation.style.textDecoration = 'line-through'
                     reservation.style.textDecorationThickness = '4px'
                     reservation.style.textDecorationColor = 'red'
-                    reservation.className = 'booked'
+
                 }
             }
         }
@@ -216,33 +233,34 @@ async function lookUpAll() {
         else {
             for (let i = checkinDay; i <= checkoutDay; i++) {
                 let reservation = document.getElementById(`${i}`)
+                reservation.className = 'booked'
                 reservation.style.textDecoration = 'line-through'
                 reservation.style.textDecorationThickness = '4px'
                 reservation.style.textDecorationColor = 'red'
-                reservation.className='booked'
+
             }
         }
     }
 }
 
-    /**
-     * 
-     * with sql query fake code
-     * 
-     * select id from reservations where (checkin day >= checkin input day and checkout day <= checkout input day)
-     * 
-     * or (checkin input day < checkin day and checkout input day > checkout day)
-     */
+/**
+ * 
+ * with sql query fake code
+ * 
+ * select id from reservations where (checkin day >= checkin input day and checkout day <= checkout input day)
+ * 
+ * or (checkin input day < checkin day and checkout input day > checkout day)
+ */
 
-    /**
-     * Loop through all the reservations
-     * see if the checkin and checout date or any days in between from the input are 
-     * overlapping with any existing reservations
-     * 
-     * if so then display an error message for the dates or the form in general to correct it
-     * 
-     * otherwise submit it
-     */
+/**
+ * Loop through all the reservations
+ * see if the checkin and checout date or any days in between from the input are 
+ * overlapping with any existing reservations
+ * 
+ * if so then display an error message for the dates or the form in general to correct it
+ * 
+ * otherwise submit it
+ */
 
 
 
