@@ -150,40 +150,41 @@ async function getValues() {
         console.log(reservations)
 
         for (let i = 0; i < bookedDate.length; i++) {
-            for (let reservation of reservations) {
+            
                 
-                console.log('test:', reservation.checkin)
-                const checkinDateObject = new Date(reservation.checkin)
-                console.log('debugging:', checkinDateObject)
+                console.log('test:', checkin)
+                const checkinDateObject = new Date(checkin)
+                const checkoutDateObject = new Date(checkout)
                 console.log('debugging2:', bookedDate[i].id)
 
-                if (checkinDateObject.getMonth() == currentMonth && checkinDateObject.getDate() == bookedDate[i].id) {
+                if ((checkinDateObject.getMonth()+1) == currentMonth && (checkinDateObject.getDate()+1) == bookedDate[i].id || (checkoutDateObject.getDate()+1) == bookedDate[i].id) {
 
                     return console.log('reservation has a conflict')
 
                 }
                 else {
-                    continue
-                }
-            }
-        }
-            let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
-            console.log(res)
+                    let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
+                    console.log(res)
+        
+                    if (res) {
+                     window.location.href='https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
+                     }
 
-            if (res) {
-            window.location.href='https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
-            }
+                }
+            
+        }
+
         }
 
 
     
     checkForOverlap()
 
-    let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
-    console.log(res)
-    if (res) {
-        window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
-    }
+    // let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
+    // console.log(res)
+    // if (res) {
+    //     window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
+    // }
 }
 
 
