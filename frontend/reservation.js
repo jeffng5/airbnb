@@ -1,5 +1,7 @@
 import { Helpers } from './helpers'
+const STRIPE = process.env.STRIPE
 
+console.log(STRIPE)
 let date = new Date();
 console.log(date.getDate())
 let year = date.getFullYear();
@@ -80,7 +82,7 @@ const manipulate = () => {
     // with the generated calendar
     day.innerHTML = lit;
 }
-
+lookUpAll();
 manipulate();
 
 // Attach a click event listener to each icon
@@ -129,15 +131,23 @@ async function getValues() {
     let checkout = document.getElementById('checkout').value;
 
 
+// 2 FAULTS IN MY CODE
 
+// 1. For July, the only reservation is 6/30 - 7/2 yet it is not displaying 7/1 and 7/2 as booked
+
+// 2. For month of July, I am trying to book on an empty date but can't bc of undefined,,,, BUT IN May and June the booking works
 
 
 
     async function checkForOverlap() {
         let bookedDate = document.getElementsByClassName('booked');
         console.log(bookedDate[0].id)
+        let currMonth = document.getElementsByTagName('p')[0];
+        let currentMonth = currMonth.innerText.slice(0, -5)
 
         let reservations = await Helpers.getAllReservations()
+
+        //if (bookedDate) 
         for (let i = 0; i < bookedDate.length; i++) {
             for (let reservation of reservations) {
 
@@ -145,7 +155,8 @@ async function getValues() {
                 console.log(checkinDateObject.getDate())
                 console.log(bookedDate[i].id)
 
-                if (checkinDateObject.getDate() == bookedDate[i].id) {
+                if (checkinDateObject.getMonth() == currentMonth && checkinDateObject.getDate() == bookedDate[i].id) {
+                    
                     return console.log('reservation has a conflict')
 
                 }
@@ -157,12 +168,14 @@ async function getValues() {
         let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
         console.log(res)
 
+        if (res) {
+            window.location.href = STRIPE
 
+        }
 
     }
     checkForOverlap()
 }
-
 
 
 
@@ -186,10 +199,10 @@ async function lookUpAll() {
         const checkinDay = checkinDateObject.getDate()
         const checkoutDateObject = new Date(reservation.checkout)
         const checkoutDay = checkoutDateObject.getDate()
-        const difference = checkoutDay - checkinDay
+        console.log(checkoutDay)
 
 
-        if (checkoutDateObject.getMonth() !== checkinDateObject.getMonth() && checkoutDateObject.getMonth() == currentMonth) {
+        if (checkoutDateObject.getMonth() == currentMonth && checkoutDateObject.getMonth() !== checkinDateObject.getMonth()) {
             for (let i = 1; i <= checkoutDay; i++) {
 
                 let reservation = document.getElementById(`${i}`)
@@ -200,7 +213,7 @@ async function lookUpAll() {
 
             }
         }
-        if (checkoutDateObject.getMonth() !== checkinDateObject.getMonth() && checkinDateObject.getMonth() == currentMonth) {
+        if (checkinDateObject.getMonth() == currentMonth && checkoutDateObject.getMonth() !== checkinDateObject.getMonth()) {
             let year = date.getFullYear();
             let month = date.getMonth();
             console.log(month)
@@ -261,11 +274,6 @@ async function lookUpAll() {
  * 
  * otherwise submit it
  */
-
-
-
-
-
 
 
 lookUpAll();
