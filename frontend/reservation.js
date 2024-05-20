@@ -1,7 +1,7 @@
 import { Helpers } from './helpers'
 const STRIPE = process.env.STRIPE
 
-console.log(STRIPE)
+
 let date = new Date();
 console.log(date.getDate())
 let year = date.getFullYear();
