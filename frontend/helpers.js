@@ -20,7 +20,7 @@ export class Helpers {
     }
 
     static async book(firstname, lastname, email, checkin, checkout) {
-        let res = await this.request(`reservation.html`, { firstname, lastname, email, checkin, checkout }, 'post')
+        let res = await this.request(`reservation`, { firstname, lastname, email, checkin, checkout }, 'post')
         if(res) {
             return res.data
         }
@@ -29,11 +29,19 @@ export class Helpers {
         }
     }
 
-    static async getDatabase() {
-        let res = await this.request('reservation.html')
+    static async getReservationForCurrentMonth(month) {
+        let res = await this.request(`reservation/${month}`)
         console.log(res.data)
         return res.data
     }
 
-
+    static async getAllReservations() {
+        let res = await this.request(`reservation`)
+        if (res) {
+        return res.data
+        }
+        else {
+            return 'getAllReservations : Could not fetch reservations'
+        }
+    }
 }

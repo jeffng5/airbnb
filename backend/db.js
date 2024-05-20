@@ -21,7 +21,7 @@ console.log(password)
 //   });
 // } else {
   db = new Client({
-    connectionString: `postgresql://${USER}:${password}@127.0.0.1:${DATABASE_PORT}/postgres`
+    connectionString: `postgresql://${USER}:${password}@localhost:${DATABASE_PORT}/postgres`
   });
 // }
 

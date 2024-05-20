@@ -32,24 +32,30 @@ const db = pgp(`postgresql://${USER}:${password}@127.0.0.1:${PORT}/postgres`)
 
 /////////////////////////////// BASIC ROUTES ///////////////////////////// 
 
-app.get('/reservation.html', async (req, res, next) => {
-    try {
-        const result = await db.query('SELECT * FROM reservations')
-        console.log('get reservations', result)
-        return res.status(200).json(result)
-    }
-    catch (e) {
-        console.log(e)
-        return res.status(500).json({ error: e })
+app.get('/reservation/:month', async (req, res, next) => {
+
+    const { month } = req.params
+    console.log('params', req.params)
+    console.log('month', month)
+    const monthToNumber = { 'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12 }
+
+    for (monthName in monthToNumber) {
+        if (monthName === month) {
+            try {
+                const result = await db.query(`SELECT checkin, checkout FROM reservations WHERE checkout BETWEEN '2024-${monthToNumber[monthName] + 1}-01' and '2024-${monthToNumber[monthName] + 1}-30' OR EXTRACT(MONTH FROM checkin) = ${monthToNumber[monthName]} OR EXTRACT(MONTH FROM checkout) = ${monthToNumber[monthName]}`)
+                console.log('get reservations', result)
+                return res.status(200).json(result)
+            }
+            catch (e) {
+                console.log(e)
+                return res.status(500).json({ error: e })
+            }
+
+        }
     }
 })
 
-app.get('/reservation/month', async (req, res, next) => {
-    //get the month name from the req.params
-    // query only reservations in that month and return them
-})
-
-app.post('/reservation.html', async (req, res, next) => {
+app.post('/reservation', async (req, res, next) => {
     try {
         const { firstname, lastname, email, checkin, checkout } = req.body
         console.log(req.body)
@@ -65,7 +71,17 @@ app.post('/reservation.html', async (req, res, next) => {
     }
 })
 
-
+app.get('/reservation', async (req, res, next) => {
+    try {
+        const result = await db.query(`SELECT checkin, checkout from reservations`)
+        console.log('fetch successful')
+        return res.status(200).json(result)
+    }
+    catch (e) {
+        console.log(e)
+        return res.status(500).json({ error: e })
+    }
+})
 
 
 module.exports = app;

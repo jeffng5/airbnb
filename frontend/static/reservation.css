@@ -105,7 +105,6 @@ header .calendar-current-date {
 
 .calendar-dates li.booked {
     color: #aaa;
-    background: red;
     text-decoration: line-through;
 }
  
@@ -205,6 +204,7 @@ button {
     font-size: 18px;
 }
 
-#booked {
-    text-decoration: line-through;
-}
+
+/* .calendar-body {
+    text-decoration-thickness:'5px';
+ } */
