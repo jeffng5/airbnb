@@ -147,16 +147,17 @@ async function getValues() {
         console.log('month:', currentMonth)
         console.log('checkOverlapMonth:', currentMonth)
         let reservations = await Helpers.getAllReservations()
-
+        console.log(reservations)
 
         for (let i = 0; i < bookedDate.length; i++) {
             for (let reservation of reservations) {
-
+                
+                console.log('test:', reservation.checkin)
                 const checkinDateObject = new Date(reservation.checkin)
-                console.log(checkinDateObject.getDate())
-                console.log(bookedDate[i].id)
+                console.log('debugging:', checkinDateObject)
+                console.log('debugging2:', bookedDate[i].id)
 
-                if (checkinDateObject.getMonth()+1 == currentMonth && checkinDateObject.getDate() == bookedDate[i].id) {
+                if (checkinDateObject.getMonth() == currentMonth && checkinDateObject.getDate() == bookedDate[i].id) {
 
                     return console.log('reservation has a conflict')
 
@@ -169,12 +170,20 @@ async function getValues() {
             let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
             console.log(res)
 
-
+            if (res) {
+            window.location.href='https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
+            }
         }
 
 
     
     checkForOverlap()
+
+    let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
+    console.log(res)
+    if (res) {
+        window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
+    }
 }
 
 
