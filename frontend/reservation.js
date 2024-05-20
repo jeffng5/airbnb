@@ -127,7 +127,6 @@ async function getValues() {
     let lastname = document.getElementById('lastname').value;
     let email = document.getElementById('email').value;
     let checkin = document.getElementById('checkin').value;
-    console.log(checkin)
     let checkout = document.getElementById('checkout').value;
 
 
@@ -135,10 +134,11 @@ async function getValues() {
 
     async function checkForOverlap() {
 
-        let hashMap = { 'January': 1, 'February' : 2, 'March' : 3, 'April' : 4, 'May' : 5 , 'June' : 6, 'July' : 7,
-        'August' : 8, 'September' : 9, 'October' : 10, 'November' : 11, 'December' : 12
+        let hashMap = {
+            'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7,
+            'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12
         }
-    
+
         let bookedDate = document.getElementsByClassName('booked');
         console.log(bookedDate[0].id)
         let currMonth = document.getElementsByTagName('p')[0];
@@ -149,15 +149,18 @@ async function getValues() {
         let reservations = await Helpers.getAllReservations()
         console.log(reservations)
 
-        for (let i = 0; i < bookedDate.length; i++) {
+        for (let reservation of reservations) {
+            for (let i = 0; i < bookedDate.length; i++) {
             
+
+
+                const checkinDateObject = new Date(reservation.checkin)
                 
-                console.log('test:', checkin)
-                const checkinDateObject = new Date(checkin)
-                const checkoutDateObject = new Date(checkout)
+                const checkoutDateObject = new Date(reservation.checkout)
+                console.log('test:', checkinDateObject.getMonth()+1)
                 console.log('debugging2:', bookedDate[i].id)
 
-                if ((checkinDateObject.getMonth()+1) == currentMonth && (checkinDateObject.getDate()+1) == bookedDate[i].id || (checkoutDateObject.getDate()+1) == bookedDate[i].id) {
+                if ((checkinDateObject.getMonth() + 1) == currentMonth && (checkinDateObject.getDate()) == bookedDate[i].id || (checkoutDateObject.getDate()) == bookedDate[i].id) {
 
                     return console.log('reservation has a conflict')
 
@@ -165,21 +168,23 @@ async function getValues() {
                 else {
                     let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
                     console.log(res)
-        
-                    if (res) {
-                     window.location.href='https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
-                     }
 
-                }
-            
+                //     // if (res) {
+                //     //  window.location.href='https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
+                //     //  }
+
+                // }
+
+            }
+
+
         }
 
-        }
+    }
 
 
-    
+    }
     checkForOverlap()
-
     // let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
     // console.log(res)
     // if (res) {
@@ -200,16 +205,17 @@ async function bookReservation() {
 
 async function lookUpAll() {
 
-    let hashMap = { 'January': 1, 'February' : 2, 'March' : 3, 'April' : 4, 'May' : 5 , 'June' : 6, 'July' : 7,
-    'August' : 8, 'September' : 9, 'October' : 10, 'November' : 11, 'December' : 12
+    let hashMap = {
+        'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7,
+        'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12
     }
 
     let currMonth = document.getElementsByTagName('p')[0];
     let currentM = currMonth.innerText.slice(0, -5)
-    
+
     let currentMonth = hashMap[currentM]
-    
-    
+
+
     console.log('month:', currentMonth)
 
 
@@ -217,16 +223,16 @@ async function lookUpAll() {
     console.log(reservations)
     for (let reservation of reservations) {
         const checkinDateObject = new Date(reservation.checkin)
-        console.log('checkinDateObject:', checkinDateObject.getMonth()+1)
+
         const checkinDay = checkinDateObject.getDate()
-        console.log(checkinDay)
+
         const checkoutDateObject = new Date(reservation.checkout)
-        console.log('checkoutDateObject:', checkoutDateObject.getMonth()+1)
+
         const checkoutDay = checkoutDateObject.getDate()
-        console.log(checkoutDay)
 
 
-        if (checkoutDateObject.getMonth()+1 == currentMonth && checkoutDateObject.getMonth()+1 !== checkinDateObject.getMonth()+1) {
+
+        if (checkoutDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() + 1 !== checkinDateObject.getMonth() + 1) {
             for (let i = 1; i <= checkoutDay; i++) {
 
                 let reservation = document.getElementById(`${i}`)
@@ -237,14 +243,14 @@ async function lookUpAll() {
 
             }
         }
-        if (checkinDateObject.getMonth()+1 == currentMonth && checkoutDateObject.getMonth()+1 !== checkinDateObject.getMonth()+1) {
+        if (checkinDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() + 1 !== checkinDateObject.getMonth() + 1) {
             let year = date.getFullYear();
             let month = date.getMonth();
             console.log(month)
             let lastdate = new Date(year, month + 1, 0).getDate();
             console.log(lastdate)
-        
-            
+
+
             if (checkinDay === lastdate) {
                 let reservation = document.getElementById(`${checkinDay}`)
                 reservation.className = 'booked'
@@ -268,7 +274,7 @@ async function lookUpAll() {
         }
 
 
-        if (checkinDateObject.getMonth()+1 == currentMonth && checkoutDateObject.getMonth()+1 == checkinDateObject.getMonth()+1) {
+        if (checkinDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() + 1 == checkinDateObject.getMonth() + 1) {
             for (let i = checkinDay; i <= checkoutDay; i++) {
                 let reservation = document.getElementById(`${i}`)
                 reservation.className = 'booked'
@@ -303,4 +309,5 @@ async function lookUpAll() {
 
 lookUpAll();
 bookReservation();
+lookUpAll();
 const allReservationData = lookUpAll();
