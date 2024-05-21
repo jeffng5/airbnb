@@ -123,12 +123,33 @@ prenexIcons.forEach(icon => {
     });
 })
 
+async function checkIfPastDate() {
+    // let firstname = document.getElementById('firstname').value;
+    // let lastname = document.getElementById('lastname').value;
+    // let email = document.getElementById('email').value;
+    let checkin = document.getElementById('checkin').value;
+    // let checkout = document.getElementById('checkout').value;
+
+    let date1 = checkin;
+    date1 = parseInt(date1.split('/').reverse().join(''));
+    //number 20180605
+
+    let date2 = new Date();
+    date2 = parseInt(date2.toISOString().slice(0, 10).replace(/-/g, ""));
+    // number 20180610
+
+    //compare
+    if (date1 < date2) alert('in the past')
+    return console.log('boolean:', date1 < date2);
+}
+
 async function getValues() {
     let firstname = document.getElementById('firstname').value;
     let lastname = document.getElementById('lastname').value;
     let email = document.getElementById('email').value;
     let checkin = document.getElementById('checkin').value;
     let checkout = document.getElementById('checkout').value;
+
 
 
 
@@ -150,6 +171,8 @@ async function getValues() {
         // let reservations = await Helpers.getAllReservations()
         // console.log(reservations)
 
+
+
         if (bookedDate.length >= 1) {
             for (let i = 0; i < bookedDate.length; i++) {
 
@@ -159,9 +182,9 @@ async function getValues() {
 
                 const checkoutDateObject = new Date(checkout)
                 console.log('test:', bookedDate[i].id)
-                console.log('debugging2:', checkinDateObject.getDate()+1)
+                console.log('debugging2:', checkinDateObject.getDate() + 1)
 
-                if ((checkinDateObject.getMonth() + 1) == currentMonth && (checkinDateObject.getDate()+1) == bookedDate[i].id || (checkoutDateObject.getDate()) == bookedDate[i].id) {
+                if ((checkinDateObject.getMonth() + 1) == currentMonth && (checkinDateObject.getDate() + 1) == bookedDate[i].id || (checkoutDateObject.getDate()) == bookedDate[i].id) {
 
                     return console.log('reservation has a conflict')
 
@@ -171,17 +194,17 @@ async function getValues() {
                 }
             }
         }
-        
+
+        if (checkIfPastDate() == false) {
             let res = 'success'
             console.log(res)
 
-            if (res){
-              window.location.href='https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
-              await Helpers.book(firstname, lastname, email, checkin, checkout)
+            if (res) {
+                window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
+                await Helpers.book(firstname, lastname, email, checkin, checkout)
 
+            }
         }
-
-
 
         // else {
         //     let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
@@ -215,7 +238,7 @@ async function getValues() {
 async function bookReservation() {
     let button = document.getElementById('reserve')
     console.log(button)
-    button.addEventListener('click', function (e) { e.preventDefault(); getValues() })
+    button.addEventListener('click', function (e) { e.preventDefault(); checkIfPastDate(); getValues() })
 }
 
 async function lookUpAll() {
