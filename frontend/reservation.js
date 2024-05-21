@@ -141,8 +141,20 @@ async function checkIfPastDate() {
     console.log(date1)
     //compare
     if (date1 < date2) {alert('in the past')}
-    return console.log('boolean:', date1 < date2);
+    else{
+        let res = 'success'
+
+        if (res) {
+        await Helpers.book(firstname, lastname, email, checkin, checkout)
+        // take to Stripe payment page
+        window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
+        // makes reservation
 }
+}
+
+    }
+
+
 
 // function to book reservation and to check if there is a scheduling conflict
 async function getValues() {
@@ -165,7 +177,6 @@ async function getValues() {
 
         //getting class = 'booked' for dates that are booked
         let bookedDate = document.getElementsByClassName('booked');
-        console.log('bookedElement:', bookedDate[0].id)
 
         //getting current month literal and year
         let currMonth = document.getElementsByTagName('p')[0];
@@ -173,8 +184,7 @@ async function getValues() {
         let currentM = currMonth.innerText.slice(0, -5)
         //using hashMap to get month number
         let currentMonth = hashMap[currentM]
-        console.log('month:', currentMonth)
-        console.log('checkOverlapMonth:', currentMonth)
+  
      
 
 
@@ -191,7 +201,7 @@ async function getValues() {
                 console.log('debugging2:', checkinDateObject.getDate() + 1)
 
                 //logic that if checkin day entered is in the booked class dates || checkout day is ib booked class object
-                if ((checkinDateObject.getMonth() + 1) == currentMonth && (checkinDateObject.getDate() + 1) == bookedDate[i].id || (checkoutDateObject.getDate()) == bookedDate[i].id) {
+                if ((checkinDateObject.getMonth() + 1) == currentMonth && (checkinDateObject.getDate() + 1) == bookedDate[i].id || checkoutDateObject.getMonth()+1 == currentMonth && (checkoutDateObject.getDate()) == bookedDate[i].id) {
                     // if the day is in booked class, means it has already been reserved
                     return alert('reservation has a conflict')
 
@@ -202,19 +212,11 @@ async function getValues() {
             }
         }
         // if bookedDate is empty || if the checkin/out dates have no conflict with booked class
-        if (checkIfPastDate() == false) {
-            let res = 'success'
-            console.log(res)
 
-            if (res) {
-                // take to Stripe payment page
-                window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
-                // makes reservation
-                await Helpers.book(firstname, lastname, email, checkin, checkout)
-
-            }
+        checkIfPastDate() 
+           
         }
-    }
+    
     checkForOverlap()
 }
 
@@ -242,7 +244,7 @@ async function lookUpAll() {
     let currentMonth = hashMap[currentM]
 
 
-    console.log('month:', currentMonth)
+  
 
     //gets reservations for current month to be displayed, We only need current month bc each render of the calendar will call a new reservations that will display current months res.
     let reservations = await Helpers.getReservationForCurrentMonth(currentM)
@@ -253,18 +255,18 @@ async function lookUpAll() {
 
         // setting checkinDate object 
         const checkinDateObject = new Date(reservation.checkin)
-        console.log('check:', checkinDateObject.getMonth() + 1 == currentMonth)
+        
         
         // setting day of checkin which will be number 
         const checkinDay = checkinDateObject.getDate()
-        console.log('checkinDay:', checkinDay)
+       
 
         // setting checkoutDate object
         const checkoutDateObject = new Date(reservation.checkout)
 
         // setting day of checkout which will be number
         const checkoutDay = checkoutDateObject.getDate()
-        console.log('checkoutDay:', checkoutDay)
+    
 
     // Setting up scenarios of the objects which can only be 3 scenarios: 
 
@@ -284,6 +286,9 @@ async function lookUpAll() {
 
         // 2nd scenario: checkinDate and checkoutDate is not in the same month (edge case 2) but checkinDate is current month
         if (checkinDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() !== checkinDateObject.getMonth()) {
+
+            let date = new Date();
+            console.log(date.getDate())
             let year = date.getFullYear();
             let month = date.getMonth();
             console.log(month)
@@ -293,18 +298,18 @@ async function lookUpAll() {
             let dayend = new Date(year, month, lastdate).getDay();
             console.log("dayend:", dayend)
 
-            //if checkinday is last day of month
-            if (checkinDay === dayend) {
-                let reservation = document.getElementById(`${checkinDay}`)
-                reservation.className = 'booked'
-                reservation.style.textDecoration = 'line-through'
-                reservation.style.textDecorationThickness = '4px'
-                reservation.style.textDecorationColor = 'red'
+            // //if checkinday is last day of month
+            // if (checkinDay === dayend) {
+            //     let reservation = document.getElementById(`${checkinDay}`)
+            //     reservation.className = 'booked'
+            //     reservation.style.textDecoration = 'line-through'
+            //     reservation.style.textDecorationThickness = '4px'
+            //     reservation.style.textDecorationColor = 'red'
 
-            }
+            // }
 
             // if checkin day is before last day, we start on checkin day and count to last day
-            else {
+            // else {
                 for (let i = checkinDay; i <= dayend; i++) {
 
                     let reservation = document.getElementById(`${i}`)
@@ -315,7 +320,7 @@ async function lookUpAll() {
 
                 }
             }
-        }
+        
 
         // 3rd scenario: (SIMPLEST) checkin day and checkout day is in same month 
         if (checkinDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() == checkinDateObject.getMonth()) {
