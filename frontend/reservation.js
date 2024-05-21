@@ -123,26 +123,26 @@ prenexIcons.forEach(icon => {
     });
 })
 
-async function checkIfPastDate() {
-    // let firstname = document.getElementById('firstname').value;
-    // let lastname = document.getElementById('lastname').value;
-    // let email = document.getElementById('email').value;
-    let checkin = document.getElementById('checkin').value;
-    // let checkout = document.getElementById('checkout').value;
 
+async function checkIfPastDate() {
+    //get checkin date from form
+    let checkin = document.getElementById('checkin').value;
+    //parsing date
     let date1 = checkin;
     date1 = parseInt(date1.split('/').reverse().join(''));
-    //number 20180605
-
+    
+    //getting current date
     let date2 = new Date();
+    //parsing current date
     date2 = parseInt(date2.toISOString().slice(0, 10).replace(/-/g, ""));
-    // number 20180610
+ 
 
     //compare
     if (date1 < date2) alert('in the past')
     return console.log('boolean:', date1 < date2);
 }
 
+// function to book reservation and to check if there is a scheduling conflict
 async function getValues() {
     let firstname = document.getElementById('firstname').value;
     let lastname = document.getElementById('lastname').value;
@@ -153,39 +153,44 @@ async function getValues() {
 
 
 
-
+    // check for conflict
     async function checkForOverlap() {
-
+        //hashMap to convert month into integer representation
         let hashMap = {
             'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7,
             'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12
         }
 
+        //getting class = 'booked' for dates that are booked
         let bookedDate = document.getElementsByClassName('booked');
         console.log('bookedElement:', bookedDate[0].id)
+
+        //getting current month literal and year
         let currMonth = document.getElementsByTagName('p')[0];
+        //slicing the currMonth to just month
         let currentM = currMonth.innerText.slice(0, -5)
+        //using hashMap to get month number
         let currentMonth = hashMap[currentM]
         console.log('month:', currentMonth)
         console.log('checkOverlapMonth:', currentMonth)
-        // let reservations = await Helpers.getAllReservations()
-        // console.log(reservations)
+     
 
 
-
+        // checking that bookedDate has elements
         if (bookedDate.length >= 1) {
             for (let i = 0; i < bookedDate.length; i++) {
 
                 let bookedDate = document.getElementsByClassName('booked');
-
+                //convert checkin date object 
                 const checkinDateObject = new Date(checkin)
-
+                //convert checkout date object
                 const checkoutDateObject = new Date(checkout)
                 console.log('test:', bookedDate[i].id)
                 console.log('debugging2:', checkinDateObject.getDate() + 1)
 
+                //logic that if checkin day entered is in the booked class dates || checkout day is ib booked class object
                 if ((checkinDateObject.getMonth() + 1) == currentMonth && (checkinDateObject.getDate() + 1) == bookedDate[i].id || (checkoutDateObject.getDate()) == bookedDate[i].id) {
-
+                    // if the day is in booked class, means it has already been reserved
                     return alert('reservation has a conflict')
 
                 }
@@ -194,87 +199,78 @@ async function getValues() {
                 }
             }
         }
-
+        // if bookedDate is empty || if the checkin/out dates have no conflict with booked class
         if (checkIfPastDate() == false) {
             let res = 'success'
             console.log(res)
 
             if (res) {
+                // take to Stripe payment page
                 window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
+                // makes reservation
                 await Helpers.book(firstname, lastname, email, checkin, checkout)
 
             }
         }
-
-        // else {
-        //     let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
-        //     console.log(res)
-
-        //     if (res){
-        //         window.location.href='https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
-        //       }
-
-        // }
-
-        // }
-
-
-
-
     }
     checkForOverlap()
-    // let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
-    // console.log(res)
-    // if (res) {
-    //     window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
-    // }
 }
 
-
-
-
-
-
+// function with eventListener to book 
 async function bookReservation() {
     let button = document.getElementById('reserve')
     console.log(button)
     button.addEventListener('click', function (e) { e.preventDefault(); checkIfPastDate(); getValues() })
 }
 
-async function lookUpAll() {
 
+//this function marks up all the reservations in the database that have been reserved on the calendar
+async function lookUpAll() {
+    // hashMap to convert literal months to numbers
     let hashMap = {
         'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7,
         'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12
     }
 
+    // grabbing month and year object
     let currMonth = document.getElementsByTagName('p')[0];
+    // slicing the object to only get month
     let currentM = currMonth.innerText.slice(0, -5)
-
+    // converting month to number
     let currentMonth = hashMap[currentM]
 
 
     console.log('month:', currentMonth)
 
-
+    //gets reservations for current month to be displayed, We only need current month bc each render of the calendar will call a new reservations that will display current months res.
     let reservations = await Helpers.getReservationForCurrentMonth(currentM)
     console.log(reservations)
+
+    //looping thru reservations and setting the necessary objects that will be needed 
     for (let reservation of reservations) {
+
+        // setting checkinDate object 
         const checkinDateObject = new Date(reservation.checkin)
         console.log('check:', checkinDateObject.getMonth() + 1 == currentMonth)
+        
+        // setting day of checkin which will be number 
         const checkinDay = checkinDateObject.getDate()
         console.log('checkinDay:', checkinDay)
+
+        // setting checkoutDate object
         const checkoutDateObject = new Date(reservation.checkout)
 
+        // setting day of checkout which will be number
         const checkoutDay = checkoutDateObject.getDate()
         console.log('checkoutDay:', checkoutDay)
 
+    // Setting up scenarios of the objects which can only be 3 scenarios: 
 
-
-
+        // 1st scenario : checkinDate and checkoutDate are not in the same month (edge case) and checkoutDate is currentMonth
         if (checkoutDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() !== checkinDateObject.getMonth()) {
+            //in 1st scernaio, we would start at 1 and count to checkout day
             for (let i = 1; i <= checkoutDay; i++) {
-
+            
                 let reservation = document.getElementById(`${i}`)
                 reservation.className = 'booked'
                 reservation.style.textDecoration = 'line-through'
@@ -283,15 +279,19 @@ async function lookUpAll() {
 
             }
         }
+
+        // 2nd scenario: checkinDate and checkoutDate is not in the same month (edge case 2) but checkinDate is current month
         if (checkinDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() !== checkinDateObject.getMonth()) {
             let year = date.getFullYear();
             let month = date.getMonth();
             console.log(month)
             let lastdate = new Date(year, month + 1, 0).getDate();
             console.log(lastdate)
+            // finding last day of month
             let dayend = new Date(year, month, lastdate).getDay();
             console.log("dayend:", dayend)
 
+            //if checkinday is last day of month
             if (checkinDay === dayend) {
                 let reservation = document.getElementById(`${checkinDay}`)
                 reservation.className = 'booked'
@@ -301,6 +301,7 @@ async function lookUpAll() {
 
             }
 
+            // if checkin day is before last day, we start on checkin day and count to last day
             else {
                 for (let i = checkinDay; i <= dayend; i++) {
 
@@ -314,9 +315,11 @@ async function lookUpAll() {
             }
         }
 
-
+        // 3rd scenario: (SIMPLEST) checkin day and checkout day is in same month 
         if (checkinDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() == checkinDateObject.getMonth()) {
             console.log(checkinDateObject.getMonth())
+
+            // we start at checkin day and count to checkout day
             for (let i = checkinDay; i <= checkoutDay; i++) {
                 let reservation = document.getElementById(`${i}`)
                 reservation.className = 'booked'
