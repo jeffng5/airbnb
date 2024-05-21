@@ -124,35 +124,14 @@ prenexIcons.forEach(icon => {
 })
 
 
-async function checkIfPastDate() {
-    //get checkin date from form
-    let checkin = document.getElementById('checkin').value;
-    //parsing date
-    console.log(checkin)
-    let date1 = checkin;
-    date1 = parseInt(date1.split('-').join(''));
-    
-    //getting current date
-    let date2 = new Date();
-    //parsing current date
-    
-    date2 = parseInt(date2.toISOString().slice(0, 10).replace(/-/g, ""));
-    console.log(date2)
-    console.log(date1)
-    //compare
-    if (date1 < date2) {alert('in the past')}
-    else{
-        let res = 'success'
 
-        if (res) {
-        await Helpers.book(firstname, lastname, email, checkin, checkout)
-        // take to Stripe payment page
-        window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
-        // makes reservation
-}
-}
 
-    }
+    // else {
+    //     window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
+    //     await Helpers.book(firstname, lastname, email, checkin, checkout)
+    // }
+
+    
 
 
 
@@ -165,7 +144,33 @@ async function getValues() {
     let checkout = document.getElementById('checkout').value;
 
 
-
+    async function checkIfPastDate(checkin) {
+        //get checkin date from form
+    
+        //parsing date
+        console.log(checkin)
+        let date1 = checkin;
+        date1 = parseInt(date1.split('-').join(''));
+        
+        //getting current date
+        let date2 = new Date();
+        //parsing current date
+        
+        date2 = parseInt(date2.toISOString().slice(0, 10).replace(/-/g, ""));
+        console.log(date2)
+        console.log(date1)
+        //compare
+        if (date1 < date2) {alert('in the past'); 
+        
+        }
+        if (date1 > date2) {
+            // take to Stripe payment page
+            window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
+            // makes reservation
+            await Helpers.book(firstname, lastname, email, checkin, checkout)
+        }
+    
+    }
 
     // check for conflict
     async function checkForOverlap() {
@@ -204,16 +209,21 @@ async function getValues() {
                 if ((checkinDateObject.getMonth() + 1) == currentMonth && (checkinDateObject.getDate() + 1) == bookedDate[i].id || checkoutDateObject.getMonth()+1 == currentMonth && (checkoutDateObject.getDate()) == bookedDate[i].id) {
                     // if the day is in booked class, means it has already been reserved
                     return alert('reservation has a conflict')
-
+                    
                 }
                 else {
                     continue
                 }
             }
         }
+        
+        checkIfPastDate(checkin)
+    
+        
         // if bookedDate is empty || if the checkin/out dates have no conflict with booked class
 
-        checkIfPastDate() 
+    
+
            
         }
     
@@ -224,7 +234,7 @@ async function getValues() {
 async function bookReservation() {
     let button = document.getElementById('reserve')
     console.log(button)
-    button.addEventListener('click', function (e) { e.preventDefault(); checkIfPastDate(); getValues() })
+    button.addEventListener('click', function (e) { e.preventDefault(); getValues() })
 }
 
 
