@@ -160,7 +160,7 @@ async function getValues() {
                 console.log('test:', checkinDateObject.getMonth()+1)
                 console.log('debugging2:', bookedDate[i].id)
 
-                if ((checkinDateObject.getMonth() + 1) == currentMonth && (checkinDateObject.getDate()) == bookedDate[i].id || (checkoutDateObject.getDate()) == bookedDate[i].id) {
+                if ((checkinDateObject.getMonth()+1) == currentMonth && (checkinDateObject.getDate()) == bookedDate[i].id || (checkoutDateObject.getDate()) == bookedDate[i].id) {
 
                     return console.log('reservation has a conflict')
 
@@ -223,16 +223,18 @@ async function lookUpAll() {
     console.log(reservations)
     for (let reservation of reservations) {
         const checkinDateObject = new Date(reservation.checkin)
-
+        console.log('check:', checkinDateObject.getMonth()+1==currentMonth)
         const checkinDay = checkinDateObject.getDate()
-
+        console.log('checkinDay:', checkinDay)
         const checkoutDateObject = new Date(reservation.checkout)
 
         const checkoutDay = checkoutDateObject.getDate()
+        console.log('checkoutDay:' , checkoutDay)
+
+        
 
 
-
-        if (checkoutDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() + 1 !== checkinDateObject.getMonth() + 1) {
+        if (checkoutDateObject.getMonth()+1 == currentMonth && checkoutDateObject.getMonth() !== checkinDateObject.getMonth() ) {
             for (let i = 1; i <= checkoutDay; i++) {
 
                 let reservation = document.getElementById(`${i}`)
@@ -243,15 +245,16 @@ async function lookUpAll() {
 
             }
         }
-        if (checkinDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() + 1 !== checkinDateObject.getMonth() + 1) {
+        if (checkinDateObject.getMonth()+1 == currentMonth && checkoutDateObject.getMonth() !== checkinDateObject.getMonth()) {
             let year = date.getFullYear();
             let month = date.getMonth();
             console.log(month)
             let lastdate = new Date(year, month + 1, 0).getDate();
             console.log(lastdate)
+            let dayend = new Date(year, month, lastdate).getDay();
+            console.log("dayend:", dayend)
 
-
-            if (checkinDay === lastdate) {
+            if (checkinDay === dayend) {
                 let reservation = document.getElementById(`${checkinDay}`)
                 reservation.className = 'booked'
                 reservation.style.textDecoration = 'line-through'
@@ -261,7 +264,7 @@ async function lookUpAll() {
             }
 
             else {
-                for (let i = checkinDay; i <= lastdate; i++) {
+                for (let i = checkinDay; i <= dayend; i++) {
 
                     let reservation = document.getElementById(`${i}`)
                     reservation.className = 'booked'
@@ -274,7 +277,8 @@ async function lookUpAll() {
         }
 
 
-        if (checkinDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() + 1 == checkinDateObject.getMonth() + 1) {
+        if (checkinDateObject.getMonth()+1 == currentMonth && checkoutDateObject.getMonth() == checkinDateObject.getMonth() ) {
+            console.log(checkinDateObject.getMonth())
             for (let i = checkinDay; i <= checkoutDay; i++) {
                 let reservation = document.getElementById(`${i}`)
                 reservation.className = 'booked'
