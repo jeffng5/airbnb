@@ -204,7 +204,10 @@ button {
     font-size: 18px;
 }
 
-
+img {
+    width: 100px;
+    height: 90px;
+}
 /* .calendar-body {
     text-decoration-thickness:'5px';
  } */

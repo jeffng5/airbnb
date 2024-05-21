@@ -4,13 +4,18 @@
   "main": "about.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel index.html"
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   },
+  "staticFiles": {
+    "staticPath": ["~/static/images"]
+ },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "parcel-reporter-static-files-copy": "^1.5.3"
   }
 }

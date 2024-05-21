@@ -128,17 +128,19 @@ async function checkIfPastDate() {
     //get checkin date from form
     let checkin = document.getElementById('checkin').value;
     //parsing date
+    console.log(checkin)
     let date1 = checkin;
-    date1 = parseInt(date1.split('/').reverse().join(''));
+    date1 = parseInt(date1.split('-').reverse().join(''));
     
     //getting current date
     let date2 = new Date();
     //parsing current date
+    
     date2 = parseInt(date2.toISOString().slice(0, 10).replace(/-/g, ""));
- 
-
+    console.log(date2)
+    console.log(date1)
     //compare
-    if (date1 < date2) alert('in the past')
+    if (date1 < date2) {alert('in the past')}
     return console.log('boolean:', date1 < date2);
 }
 
