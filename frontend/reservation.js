@@ -126,10 +126,7 @@ prenexIcons.forEach(icon => {
 
 
 
-    // else {
-    //     window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
-    //     await Helpers.book(firstname, lastname, email, checkin, checkout)
-    // }
+  
 
     
 
@@ -165,7 +162,7 @@ async function getValues() {
         }
         if (date1 > date2) {
             // take to Stripe payment page
-            window.location.href = 'https://buy.stripe.com/test_4gwbKCamL5JR1IAfYZ'
+            window.location.href = STRIPE
             // makes reservation
             await Helpers.book(firstname, lastname, email, checkin, checkout)
         }
@@ -218,12 +215,6 @@ async function getValues() {
         }
         
         checkIfPastDate(checkin)
-    
-        
-        // if bookedDate is empty || if the checkin/out dates have no conflict with booked class
-
-    
-
            
         }
     
