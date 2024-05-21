@@ -186,7 +186,7 @@ async function getValues() {
 
                 if ((checkinDateObject.getMonth() + 1) == currentMonth && (checkinDateObject.getDate() + 1) == bookedDate[i].id || (checkoutDateObject.getDate()) == bookedDate[i].id) {
 
-                    return console.log('reservation has a conflict')
+                    return alert('reservation has a conflict')
 
                 }
                 else {
