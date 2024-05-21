@@ -130,7 +130,7 @@ async function checkIfPastDate() {
     //parsing date
     console.log(checkin)
     let date1 = checkin;
-    date1 = parseInt(date1.split('-').reverse().join(''));
+    date1 = parseInt(date1.split('-').join(''));
     
     //getting current date
     let date2 = new Date();
