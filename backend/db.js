@@ -11,19 +11,10 @@ const DATABASE_PORT = process.env.DATABASE_PORT;
 
 console.log(password)
 
-// if (process.env.NODE_ENV === "production") {
-//   db = new Client({
-//     connectionString: getDatabaseUri(),
-  
-//     ssl: {
-//       rejectUnauthorized: false
-//     }
-//   });
-// } else {
-  db = new Client({
-    connectionString: `postgresql://${USER}:${password}@localhost:${DATABASE_PORT}/postgres`
-  });
-// }
+db = new Client({
+  connectionString: `postgresql://${USER}:${password}@localhost:${DATABASE_PORT}/postgres`
+});
+
 
 
 db.connect();
