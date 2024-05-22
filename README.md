@@ -16,7 +16,7 @@ Website built using vanilla JS front end and Express backend with database that 
 checking for booking conflicts, past date on booking, and makes reservations that will be reflected on calendar.
 
 ## USERFLOW
-The user lands on homepage and has options to read about Airbnb rental. User can view gallery, read testimonials, contact hots via email, and book a reservation. 
+The user lands on homepage and has options to read about Airbnb rental. User can view gallery, read testimonials, contact host via email, and book a reservation. 
 This app is designed to be a small app with minimal routing. Upon clicking on make reservation, user will be directed to a reservation page which has a full year calendar
 The calendar displays all the bookings and has feature to scroll through a month at a time. There is also a reservation form that can be submitted into backend database.
 Finally if there are no booking conflicts, user is directed to Stripe API to pay for booking. Stripe API is not functional yet since owner's info has not been updated 
