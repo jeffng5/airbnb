@@ -140,7 +140,7 @@ async function getValues() {
     let checkin = document.getElementById('checkin').value;
     let checkout = document.getElementById('checkout').value;
 
-
+    // functionto to check for past dates
     async function checkIfPastDate(checkin) {
         //get checkin date from form
     
@@ -213,11 +213,11 @@ async function getValues() {
                 }
             }
         }
-        
+        //if above function passes and the checkin date is not from past, reservation will book
         checkIfPastDate(checkin)
            
         }
-    
+    //calling above function
     checkForOverlap()
 }
 
@@ -293,25 +293,13 @@ async function lookUpAll() {
             let year = date.getFullYear();
             let month = date.getMonth();
             console.log(month)
+            // finding last day of month
             let lastdate = new Date(year, month + 1, 0).getDate();
             console.log(lastdate)
-            // finding last day of month
-            let dayend = new Date(year, month, lastdate).getDay();
-            console.log("dayend:", dayend)
-
-            // //if checkinday is last day of month
-            // if (checkinDay === dayend) {
-            //     let reservation = document.getElementById(`${checkinDay}`)
-            //     reservation.className = 'booked'
-            //     reservation.style.textDecoration = 'line-through'
-            //     reservation.style.textDecorationThickness = '4px'
-            //     reservation.style.textDecorationColor = 'red'
-
-            // }
 
             // if checkin day is before last day, we start on checkin day and count to last day
             // else {
-                for (let i = checkinDay; i <= dayend; i++) {
+                for (let i = checkinDay; i <= lastdate; i++) {
 
                     let reservation = document.getElementById(`${i}`)
                     reservation.className = 'booked'
@@ -340,28 +328,7 @@ async function lookUpAll() {
     }
 }
 
-/**
- * 
- * with sql query fake code
- * 
- * select id from reservations where (checkin day >= checkin input day and checkout day <= checkout input day)
- * 
- * or (checkin input day < checkin day and checkout input day > checkout day)
- */
-
-/**
- * Loop through all the reservations
- * see if the checkin and checout date or any days in between from the input are 
- * overlapping with any existing reservations
- * 
- * if so then display an error message for the dates or the form in general to correct it
- * 
- * otherwise submit it
- */
-
-
 lookUpAll();
 bookReservation();
 
-const allReservationData = lookUpAll();
 
