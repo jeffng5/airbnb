@@ -1,11 +1,15 @@
 # Airbnb e-Commerce clone
 
+![title](pictures/airbnb1.png)
+
 ## ABOUT 
 AirBnb clone with Stripe API integration
 
 ## APP FEATURES
 App includes an auto reservation system that checks for double bookings, past dates, and a calendar display for user and links to Stripe API upon checkout. It is a single page app 
 with a Gallery, About section, Reviews, Contact owner, and a make reservation feature.
+
+![title](pictures/airbnb2.png)
 
 ## TECH STACK USED
 Website built using vanilla JS front end and Express backend with database that stores reservation data. The reservation system is complete with features such as 
