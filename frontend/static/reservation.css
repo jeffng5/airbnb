@@ -7,7 +7,7 @@
  
 body {
     display: flex;
-    background: white;
+    background: black;
     min-height: 100vh;
     padding: 0 10px;
     align-items: center;
@@ -186,6 +186,7 @@ h3 {
 }
 
 form {
+    color: forestgreen;
     text-align: center;
 }
 

@@ -42,7 +42,7 @@ app.get('/reservation/:month', async (req, res, next) => {
     for (monthName in monthToNumber) {
         if (monthName === month) {
             try {
-                const result = await db.query(`SELECT checkin, checkout FROM reservations WHERE checkout BETWEEN '2024-${monthToNumber[monthName] + 1}-01' and '2024-${monthToNumber[monthName] + 1}-30' OR EXTRACT(MONTH FROM checkin) = ${monthToNumber[monthName]} OR EXTRACT(MONTH FROM checkout) = ${monthToNumber[monthName]}`)
+                const result = await db.query(`SELECT checkin, checkout FROM reservations WHERE checkout BETWEEN '2024-${monthToNumber[monthName]}-01' and '2024-${monthToNumber[monthName]}-30' OR EXTRACT(MONTH FROM checkin) = ${monthToNumber[monthName]} OR EXTRACT(MONTH FROM checkout) = ${monthToNumber[monthName]}`)
                 console.log('get reservations', result)
                 return res.status(200).json(result)
             }
@@ -60,28 +60,40 @@ app.post('/reservation', async (req, res, next) => {
         const { firstname, lastname, email, checkin, checkout } = req.body
         console.log(req.body)
 
-        const result = await db.query(`INSERT INTO reservations (firstname, lastname, email, checkin, checkout) VALUES ($1, $2, $3, $4, $5) RETURNING *`, [firstname, lastname, email, checkin, checkout]);
+        const result = await db.query(`INSERT INTO reservations (firstname, lastname, email, checkin, checkout) VALUES ($1, $2, $3, $4, $5) RETURNING id`, [firstname, lastname, email, checkin, checkout]);
 
-        console.log('result of create reservation: ', result)
-        return res.status(201).json(result)
-    }
+            let idNumber= result
+            console.log('result of create reservation: ', idNumber)
+            return res.json({idNumber})
+
+            
+        }
+    
     catch (e) {
         console.log(e)
         return res.status(500).json({ error: e })
     }
 })
 
-app.get('/reservation', async (req, res, next) => {
+app.get('/checkin', async (req, res, next) => {
+
     try {
-        const result = await db.query(`SELECT checkin, checkout from reservations`)
+        const {id} = req.query
+        console.log(req.query)
+        const dateCheckin = await db.query(`SELECT firstname, lastname, email, checkin, checkout FROM reservations WHERE id = $1 `, [id]);
+
         console.log('fetch successful')
-        return res.status(200).json(result)
+
+        let reservation = dateCheckin
+        return res.status(200).json({reservation})
     }
     catch (e) {
         console.log(e)
         return res.status(500).json({ error: e })
     }
+
 })
+
 
 
 module.exports = app;

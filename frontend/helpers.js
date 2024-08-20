@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = "http://localhost:5500"
+const BASE_URL = "http://localhost:4242"
 
 export class Helpers {
 
@@ -21,12 +21,8 @@ export class Helpers {
 
     static async book(firstname, lastname, email, checkin, checkout) {
         let res = await this.request(`reservation`, { firstname, lastname, email, checkin, checkout }, 'post')
-        if(res) {
-            return res.data
-        }
-        else {
-            return 'Problem creating reservation'
-        }
+        let ans = JSON.stringify(res.data)
+        return ans
     }
 
     static async getReservationForCurrentMonth(month) {
@@ -35,13 +31,10 @@ export class Helpers {
         return res.data
     }
 
-    static async getAllReservations() {
-        let res = await this.request(`reservation`)
-        if (res) {
+    static async getReservationViaId(id) {
+        let res = await this.request("checkin", { id })
+        console.log(res.data)
         return res.data
-        }
-        else {
-            return 'getAllReservations : Could not fetch reservations'
-        }
+
     }
 }

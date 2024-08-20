@@ -1,4 +1,6 @@
 import { Helpers } from './helpers'
+import axios from 'axios'
+
 const STRIPE = process.env.STRIPE
 
 
@@ -162,9 +164,17 @@ async function getValues() {
         }
         if (date1 > date2) {
             // take to Stripe payment page
-            window.location.href = STRIPE
+            
+            // window.location.href = STRIPE
+           
             // makes reservation
-            await Helpers.book(firstname, lastname, email, checkin, checkout)
+        let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
+
+        const ID = res
+        console.log(res)
+        localStorage.setItem('id', ID)
+        window.location.href='/checkout.html'
+      
         }
     
     }
@@ -225,7 +235,7 @@ async function getValues() {
 async function bookReservation() {
     let button = document.getElementById('reserve')
     console.log(button)
-    button.addEventListener('click', function (e) { e.preventDefault(); getValues() })
+    button.addEventListener('click', function (e) { e.preventDefault(); getValues(); sendEmail() })
 }
 
 
@@ -328,7 +338,39 @@ async function lookUpAll() {
     }
 }
 
+function sendEmail()
+{
+     $.ajax({
+           url: "jeffrey.ng51213@outlook.com",
+           type: "POST",
+           success: function(response) {
+               if (!response) {
+                    alert("Something went wrong. Please try again");
+                    return;
+               }
+
+               var parsedJSON = eval('('+response+')');
+
+               // If there's an error, display it.
+               if(parsedJSON.Error) {
+                  // Handle session timeout.
+                  if (parsedJSON.Error == "Timeout") {
+                       alert("Session timed out. Please login again.");
+                       window.location.reload();
+                   }
+                }
+               document.getElementById('mailStatus').innerHTML = "Email Sent successfully";  
+            }
+     });
+
+     console.log("EMAIL SENT SUCCESSFULLY WOOHOO!!")
+}
+
+
+
+
 lookUpAll();
 bookReservation();
+sendEmail()
 
-
+module.exports = ID

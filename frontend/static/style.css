@@ -1,34 +1,40 @@
 body {
-    background-color: white;
+    background-color: black;
+    text-align: center;
 }
 
 h1 {
     font-size: 30px;
-    color: forestgreen;
+    color: white;
     font-family: Arial;
     font-weight: 30;
 }
 
 h2 {
-    color: forestgreen;
+    color: white;
     font-size: 30px;
-    margin-left: 100px;
+    text-align: center;
     font-family: Arial;
     font-weight: 100;
 }
 
 .form {
-    margin-left: 100px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
     display: block;
+    font-size: 16px;
 }
 
 .form-for-email {
     border-radius: 10px;
-    margin-left: 250px;
-    margin-right: 250px;
+    margin-left: auto;
+    margin-right: auto;
     border: 2px white solid;
     padding-bottom: 20px;
     margin-top: 20px;
+    text-align: center;
+    display: block;
 
 }
 
@@ -53,7 +59,7 @@ h2 {
 
 p {
     font-size: 60px;
-    color: forestgreen;
+    color: white;
     font-family: Arial;
     margin-left: 150px;
     font-weight: 50;
@@ -88,8 +94,10 @@ div {
 
 .column {
     grid-template-columns: 350px, 350px;
-    width:50%;
-    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-flex;
+    text-align: center;
 }
 
 .panels {
@@ -97,15 +105,15 @@ div {
 }
 
 a {
-    color: forestgreen;
+    color: white;
     text-decoration:none;
 }
 
 button {
-    background-color: white;
+    background-color: black;
     font-family: Arial;
     font-size: 30px;
-    color: forestgreen;
+    color: white;
     border-color: white;
     border-style: hidden;
     display: block;
@@ -117,4 +125,19 @@ button {
     padding-bottom: 60px;
     margin-left: 340px;
     margin-right: 340px;
+}
+
+.contact-submit {
+    height: 30px;
+    width: 200px;
+    font-size: 14px;
+    background-color: forestgreen;
+    color: white;
+    border-radius: 6px;
+    position: relative;
+    left: 300px;
+}
+
+.details {
+    color: white;
 }
