@@ -3,7 +3,7 @@ var postmark = require("postmark");
 const app = express();
 const cors = require("cors")
 const CLIENT = process.env.EMAIL
-
+console.log(CLIENT)
 
 require('dotenv').config()
 app.use(express.json());

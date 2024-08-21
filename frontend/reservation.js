@@ -217,7 +217,7 @@ async function getValues() {
                 console.log('debugging2:', checkinDateObject.getDate() + 1)
                 console.log('bookedDAteMONTH',checkinDateObject.getMonth())
                 //logic that if checkin day entered is in the booked class dates || checkout day is ib booked class object
-                if ((checkinDateObject.getMonth() + 1) == currentMonth && (checkinDateObject.getDate()) == bookedDate[i].id || (checkoutDateObject.getMonth() + 1) == currentMonth && (checkoutDateObject.getDate()) == bookedDate[i].id) {
+                if (checkinDateObject.getMonth() + 1 == currentMonth && checkinDateObject.getDate() +1 == bookedDate[i].id || checkoutDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getDate() +1 == bookedDate[i].id) {
                     // if the day is in booked class, means it has already been reserved
                     return alert('reservation has a conflict')
 
