@@ -121,7 +121,7 @@ app.post('/email', async (req, res, next) => {
 
     function sendEmail() {
         // Send an email:
-        var client = new postmark.ServerClient('0f3efca0-18b4-4a0c-8ff3-c63340c38e48');
+        var client = new postmark.ServerClient(CLIENT);
 
         client.sendEmail({
 
