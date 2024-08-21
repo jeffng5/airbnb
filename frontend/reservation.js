@@ -84,7 +84,7 @@ const manipulate = () => {
     // with the generated calendar
     day.innerHTML = lit;
 }
-lookUpAll();
+
 manipulate();
 lookUpAll();
 
@@ -121,10 +121,10 @@ prenexIcons.forEach(icon => {
 
         // Call the manipulate function to 
         // update the calendar display
-//   
+        //   
         manipulate();
         lookUpAll();
-       
+
     });
 })
 
@@ -179,12 +179,12 @@ async function getValues() {
             // localStorage.removeItem('id')
             localStorage.setItem('id', id)
             // window.location.href = '/checkout.html'
-            
+
 
             let sendE = await Helpers.sendEmail(id, firstname, lastname, email, checkin, checkout)
 
 
-            
+
 
         }
 
@@ -217,14 +217,15 @@ async function getValues() {
 
                 let bookedDate = document.getElementsByClassName('booked');
                 //convert checkin date object 
+                console.log("bookedDates", bookedDate[0].id)
                 const checkinDateObject = new Date(checkin)
                 //convert checkout date object
                 const checkoutDateObject = new Date(checkout)
                 console.log('test:', bookedDate[i].id)
-                console.log('debugging2:', checkinDateObject.getDate()+1)
-                console.log(checkinDateObject.getMonth())
+                console.log('debugging2:', checkinDateObject.getDate() + 1)
+                console.log('bookedDAteMONTH',checkinDateObject.getMonth())
                 //logic that if checkin day entered is in the booked class dates || checkout day is ib booked class object
-                if ((checkinDateObject.getMonth()+1) == currentMonth && (checkinDateObject.getDate()) == bookedDate[i].id || checkoutDateObject.getMonth()+1 == currentMonth && (checkoutDateObject.getDate()) == bookedDate[i].id) {
+                if ((checkinDateObject.getMonth() + 1) == currentMonth && (checkinDateObject.getDate()) == bookedDate[i].id || (checkoutDateObject.getMonth() + 1) == currentMonth && (checkoutDateObject.getDate()) == bookedDate[i].id) {
                     // if the day is in booked class, means it has already been reserved
                     return alert('reservation has a conflict')
 
@@ -240,7 +241,7 @@ async function getValues() {
     }
     //calling above function
     checkForOverlap()
-    
+
 }
 
 // function with eventListener to book 
@@ -261,13 +262,14 @@ async function lookUpAll() {
 
     // grabbing month and year object
     let currMonth = document.getElementsByClassName('calendar-current-date')[0];
-    console.log(currMonth)
+    console.log("currMonth", currMonth)
     // slicing the object to only get month
     let currentM = currMonth.innerText.slice(0, -5)
     // converting month to number
+    console.log(currentM)
     let currentMonth = hashMap[currentM]
     console.log(currentMonth)
-    let currentY = currMonth.innerText.slice(-4,currMonth.length)
+    let currentY = currMonth.innerText.slice(-4, currMonth.length)
     console.log(currentY)
     let year = currentY
     let month = currentM
@@ -278,91 +280,104 @@ async function lookUpAll() {
     console.log(reservations)
 
     //looping thru reservations and setting the necessary objects that will be needed 
+
+    try {
     for (let reservation of reservations) {
-        console.log(reservation.checkin.slice(0,10))
+        console.log(reservation.checkin.slice(0, 10))
         // setting checkinDate object 
         const checkinDateObject = new Date(reservation.checkin)
         console.log(checkinDateObject.getFullYear())
 
         // setting day of checkin which will be number 
         const checkinDay = checkinDateObject.getDate()
-        console.log(checkinDay)
+        console.log("checkinDay",checkinDay)
 
         // setting checkoutDate object
         const checkoutDateObject = new Date(reservation.checkout)
-        console.log(checkoutDateObject.getMonth())
+        console.log('checkinDateObject', checkinDateObject)
+        console.log("checkoutDateObject", checkoutDateObject)
+        
+        console.log("checkinDateObject.getMonth()", checkinDateObject.getMonth() + 1)
+        console.log("checkoutDateObject.getMonth()", checkoutDateObject.getMonth() + 1)
+       
         // setting day of checkout which will be number
         const checkoutDay = checkoutDateObject.getDate()
-        console.log(currentMonth)
-
-    
+        console.log("checkoutDay", checkoutDay)
+        console.log("currentMonth", currentMonth)
+        console.log("previous month", currentMonth - 1)
         // Setting up scenarios of the objects which can only be 3 scenarios: 
-      
+
         // 1st scenario : checkinDate and checkoutDate are not in the same month (edge case) and checkoutDate is currentMonth
-        if (checkoutDateObject.getMonth()+1 == currentMonth && checkinDateObject.getMonth === currentMonth-1) {
+        if (checkoutDateObject.getMonth()+1 == currentMonth && checkinDateObject.getMonth()+1 == currentMonth - 1) {
             //in 1st scernaio, we would start at 1 and count to checkout day
             for (let i = 1; i <= checkoutDay; i++) {
                 console.log("I AM AT BLOCK 1")
-                let rrr = document.getElementById(`${i}`)
-                rrr.className = 'booked'
-                rrr.style.textDecoration = 'line-through'
-                rrr.style.textDecorationThickness = '4px'
-                rrr.style.textDecorationColor = 'red'
+                console.log("i", i)
+                let r = document.getElementById(`${i}`)
+                r.className = 'booked'
+                r.style.textDecoration = 'line-through'
+                r.style.textDecorationThickness = '4px'
+                r.style.textDecorationColor = 'red'
 
             }
         }
 
         // 2nd scenario: checkinDate and checkoutDate is not in the same month (edge case 2) but checkinDate is current month
-        if (checkinDateObject.getMonth()+1 == currentMonth && checkoutDateObject.getMonth() === currentMonth +1) {
+        if (checkinDateObject.getMonth()+1 == currentMonth && checkoutDateObject.getMonth()+1 == currentMonth +1) {
             console.log("I AM IN BLOCK 2")
             let date = new Date();
-            console.log(date.getDate())
+            console.log
+            console.log("block2 date",date.getDate())
             let year = date.getFullYear();
             console.log(year)
             let month = date.getMonth();
-            console.log(month)
+            console.log("block 2 month", month)
             // finding last day of month
-            let lastdate = new Date(year, month, 0).getDate();
-            console.log(lastdate)
-            
+            let lastdate = new Date(year, currentMonth, 0).getDate();
+            console.log("lastDate", lastdate)
+
             // if checkin day is before last day, we start on checkin day and count to last day
             //else {
-            for (let i = checkinDay; i <= lastdate; i++) {
+            for (let i = checkinDay ; i <= lastdate; i++) {
 
-                let r = document.getElementById(`${i}`)
-                console.log(r)
-                r.className = 'booked'
-                r.style.textDecoration = 'line-through'
-                r.style.textDecorationThickness = '4px'
-                r.style.textDecorationColor = 'red'
+                let rr = document.getElementById(`${i}`)
+                rr.className = 'booked'
+                rr.style.textDecoration = 'line-through'
+                rr.style.textDecorationThickness = '4px'
+                rr.style.textDecorationColor = 'red'
 
             }
         }
 
 
         // 3rd scenario: (SIMPLEST) checkin day and checkout day is in same month 
-        else if (reservation && checkoutDateObject.getMonth() == checkinDateObject.getMonth()) {
-            console.log(checkinDateObject.getMonth())
+        if (checkoutDateObject.getMonth() == checkinDateObject.getMonth()) {
+        
+            console.log("block3 checkinDate.getMonth", checkinDateObject.getMonth()+1)
             console.log("I AM IN BLOCK 3")
             // we start at checkin day and count to checkout day
             for (let i = checkinDay; i <= checkoutDay; i++) {
-                let r = document.getElementById(`${i}`)
-                console.log(r)
-                r.className = 'booked'
-                r.style.textDecoration = 'line-through'
-                r.style.textDecorationThickness = '4px'
-                r.style.textDecorationColor = 'red'
+                let rrr = document.getElementById(`${i}`)
+                console.log(rrr)
+                rrr.className = 'booked'
+                rrr.style.textDecoration = 'line-through'
+                rrr.style.textDecorationThickness = '4px'
+                rrr.style.textDecorationColor = 'red'
 
             }
+            //}
         }
     }
+}catch(e) {
+    console.log(e)
+}
 };
 
 
 
 
 
-// lookUpAll();
+lookUpAll();
 bookReservation();
 
 
