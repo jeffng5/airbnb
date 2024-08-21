@@ -130,7 +130,7 @@ app.post('/email', async (req, res, next) => {
 
             "From": "jeffrey@black-diamond-escape.us",
             "To": "jeffrey.ng51213@outlook.com",
-            "Subject": "You have a booking ",
+            "Subject": "You have a booking",
             "HtmlBody": `Dear owner. You have a booking, RESERVATION ID: ${id}, FIRSTNAME: ${firstname}, LASTNAME: ${lastname}, EMAIL: ${email}, CHECKIN: ${checkin}, CHECKOUT: ${checkout}`,
             "TextBody": `You have a booking. `,
             "MessageStream": "outbound"

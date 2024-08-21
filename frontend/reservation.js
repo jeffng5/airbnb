@@ -1,7 +1,6 @@
 import { Helpers } from './helpers'
 import axios from 'axios'
 
-const STRIPE = process.env.STRIPE
 
 
 let date = new Date();
@@ -314,8 +313,22 @@ async function lookUpAll() {
             }
         }
 
+        // 4th scenario handling the changing of year in reservation
+        if (currentMonth-1 ==0 && checkinDateObject.getMonth()+1 == 12){
+            for (let i = 1; i <= checkoutDay; i++){
+                let rrrr = document.getElementById(`${i}`)
+                rrrr.className = 'booked'
+                rrrr.style.textDecoration = 'line-through'
+                rrrr.style.textDecorationThickness = '4px'
+                rrrr.style.textDecorationColor = 'red'
+            }
+        }
+
+
+
+
         // 2nd scenario: checkinDate and checkoutDate is not in the same month (edge case 2) but checkinDate is current month
-        if (checkinDateObject.getMonth()+1 == currentMonth && checkoutDateObject.getMonth()+1 == currentMonth +1) {
+        if (checkinDateObject.getMonth()+1 == currentMonth && checkoutDateObject.getMonth()+1 == currentMonth +1 || currentMonth +1 == 13) {
             console.log("I AM IN BLOCK 2")
             let date = new Date();
             console.log
@@ -359,6 +372,8 @@ async function lookUpAll() {
             }
             //}
         }
+
+
     }
 }catch(e) {
     console.log(e)
