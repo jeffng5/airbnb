@@ -6,3 +6,4 @@ CREATE TABLE IF NOT EXISTS reservations (
     checkin DATE NOT NULL,
     checkout DATE NOT NULL
 );
+

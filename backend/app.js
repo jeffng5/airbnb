@@ -32,13 +32,15 @@ const db = pgp(`postgresql://${USER}:${password}@127.0.0.1:${PORT}/postgres`)
 
 /////////////////////////////// BASIC ROUTES ///////////////////////////// 
 
-app.get('/reservation', async (req, res, next) => {
+app.get('/reservations', async (req, res, next) => {
     const monthToNumber = { 'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12 }
-    const { month, year } = req.body
     try {
+    const { month, year } = req.query
+  
         
-        console.log(req.body)
+        console.log(req.query)
         console.log('month', month)
+        console.log('year', year)
 
 
         if (month == 'February') {
@@ -69,10 +71,10 @@ app.get('/reservation', async (req, res, next) => {
     }
     catch (e) {
         console.log(e)
-        return res.status(500).json({ error: e })
+        return res.status(500).json({error: e})
     }
-}
 
+}
 )
 
 app.post('/reservation', async (req, res, next) => {
@@ -116,12 +118,12 @@ app.get('/checkin', async (req, res, next) => {
 
 app.post('/email', async (req, res, next) => {
     // try {
-    const { id, firstname, lastname, email, checkin, checkout } = req.body
+    const { ids, firstname, lastname, email, checkin, checkout } = req.body
     console.log(req.body)
 
     function sendEmail() {
         // Send an email:
-        var client = new postmark.ServerClient(CLIENT);
+        var client = new postmark.ServerClient('0f3efca0-18b4-4a0c-8ff3-c63340c38e48');
 
         client.sendEmail({
 
@@ -129,7 +131,7 @@ app.post('/email', async (req, res, next) => {
             "From": "jeffrey@black-diamond-escape.us",
             "To": "jeffrey.ng51213@outlook.com",
             "Subject": "You have a booking ",
-            "HtmlBody": `Dear owner. You have a booking, RESERVATION ID: ${id}, FIRSTNAME: ${firstname}, LASTNAME: ${lastname}, EMAIL: ${email}, CHECKIN: ${checkin}, CHECKOUT: ${checkout}`,
+            "HtmlBody": `Dear owner. You have a booking, RESERVATION ID: ${ids}, FIRSTNAME: ${firstname}, LASTNAME: ${lastname}, EMAIL: ${email}, CHECKIN: ${checkin}, CHECKOUT: ${checkout}`,
             "TextBody": `You have a booking. `,
             "MessageStream": "outbound"
 

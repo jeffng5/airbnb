@@ -84,8 +84,10 @@ const manipulate = () => {
     // with the generated calendar
     day.innerHTML = lit;
 }
-// lookUpAll();
+lookUpAll();
 manipulate();
+lookUpAll();
+
 
 // Attach a click event listener to each icon
 prenexIcons.forEach(icon => {
@@ -119,8 +121,9 @@ prenexIcons.forEach(icon => {
 
         // Call the manipulate function to 
         // update the calendar display
-
+//   
         manipulate();
+        lookUpAll();
        
     });
 })
@@ -171,16 +174,17 @@ async function getValues() {
             // makes reservation
             let res = await Helpers.book(firstname, lastname, email, checkin, checkout)
 
-            const ID = res
-            console.log(res)
-            localStorage.setItem('id', ID)
+            const id = JSON.parse(res).idNumber[0].id
+            console.log(id)
+            // localStorage.removeItem('id')
+            localStorage.setItem('id', id)
+            // window.location.href = '/checkout.html'
+            
 
-            const idz = JSON.parse(res).idNumber[0].id
-
-            let sendE = await Helpers.sendEmail(idz, firstname, lastname, email, checkin, checkout)
+            let sendE = await Helpers.sendEmail(id, firstname, lastname, email, checkin, checkout)
 
 
-            window.location.href = '/checkout.html'
+            
 
         }
 
@@ -217,10 +221,10 @@ async function getValues() {
                 //convert checkout date object
                 const checkoutDateObject = new Date(checkout)
                 console.log('test:', bookedDate[i].id)
-                console.log('debugging2:', checkinDateObject.getDate() + 1)
-
+                console.log('debugging2:', checkinDateObject.getDate()+1)
+                console.log(checkinDateObject.getMonth())
                 //logic that if checkin day entered is in the booked class dates || checkout day is ib booked class object
-                if ((checkinDateObject.getMonth() + 1) == currentMonth && (checkinDateObject.getDate() + 1) == bookedDate[i].id || checkoutDateObject.getMonth() + 1 == currentMonth && (checkoutDateObject.getDate()) == bookedDate[i].id) {
+                if ((checkinDateObject.getMonth()+1) == currentMonth && (checkinDateObject.getDate()) == bookedDate[i].id || checkoutDateObject.getMonth()+1 == currentMonth && (checkoutDateObject.getDate()) == bookedDate[i].id) {
                     // if the day is in booked class, means it has already been reserved
                     return alert('reservation has a conflict')
 
@@ -236,13 +240,14 @@ async function getValues() {
     }
     //calling above function
     checkForOverlap()
+    
 }
 
 // function with eventListener to book 
 async function bookReservation() {
     let button = document.getElementById('reserve')
     console.log(button)
-    button.addEventListener('click', function (e) { e.preventDefault(); getValues(); sendEmail() })
+    button.addEventListener('click', function (e) { e.preventDefault(); getValues(); })
 }
 
 
@@ -261,17 +266,20 @@ async function lookUpAll() {
     let currentM = currMonth.innerText.slice(0, -5)
     // converting month to number
     let currentMonth = hashMap[currentM]
-
+    console.log(currentMonth)
+    let currentY = currMonth.innerText.slice(-4,currMonth.length)
+    console.log(currentY)
+    let year = currentY
     let month = currentM
     console.log(month)
-    let year = 2024
+
     //gets reservations for current month to be displayed, We only need current month bc each render of the calendar will call a new reservations that will display current months res.
     let reservations = await Helpers.getReservationForCurrentMonthAndYear(month, year)
     console.log(reservations)
 
     //looping thru reservations and setting the necessary objects that will be needed 
     for (let reservation of reservations) {
-        console.log(reservation)
+        console.log(reservation.checkin.slice(0,10))
         // setting checkinDate object 
         const checkinDateObject = new Date(reservation.checkin)
         console.log(checkinDateObject.getFullYear())
@@ -282,31 +290,31 @@ async function lookUpAll() {
 
         // setting checkoutDate object
         const checkoutDateObject = new Date(reservation.checkout)
-
+        console.log(checkoutDateObject.getMonth())
         // setting day of checkout which will be number
         const checkoutDay = checkoutDateObject.getDate()
-
+        console.log(currentMonth)
 
     
         // Setting up scenarios of the objects which can only be 3 scenarios: 
-
+      
         // 1st scenario : checkinDate and checkoutDate are not in the same month (edge case) and checkoutDate is currentMonth
-        if (checkoutDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() !== checkinDateObject.getMonth()) {
+        if (checkoutDateObject.getMonth()+1 == currentMonth && checkinDateObject.getMonth === currentMonth-1) {
             //in 1st scernaio, we would start at 1 and count to checkout day
             for (let i = 1; i <= checkoutDay; i++) {
-
-                let reservation = document.getElementById(`${i}`)
-                reservation.className = 'booked'
-                reservation.style.textDecoration = 'line-through'
-                reservation.style.textDecorationThickness = '4px'
-                reservation.style.textDecorationColor = 'red'
+                console.log("I AM AT BLOCK 1")
+                let rrr = document.getElementById(`${i}`)
+                rrr.className = 'booked'
+                rrr.style.textDecoration = 'line-through'
+                rrr.style.textDecorationThickness = '4px'
+                rrr.style.textDecorationColor = 'red'
 
             }
         }
 
         // 2nd scenario: checkinDate and checkoutDate is not in the same month (edge case 2) but checkinDate is current month
-        if (checkinDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() !== checkinDateObject.getMonth()) {
-
+        if (checkinDateObject.getMonth()+1 == currentMonth && checkoutDateObject.getMonth() === currentMonth +1) {
+            console.log("I AM IN BLOCK 2")
             let date = new Date();
             console.log(date.getDate())
             let year = date.getFullYear();
@@ -316,34 +324,34 @@ async function lookUpAll() {
             // finding last day of month
             let lastdate = new Date(year, month, 0).getDate();
             console.log(lastdate)
-
+            
             // if checkin day is before last day, we start on checkin day and count to last day
             //else {
             for (let i = checkinDay; i <= lastdate; i++) {
 
-                let reservation = document.getElementById(`${i}`)
-                console.log(reservation)
-                reservation.className = 'booked'
-                reservation.style.textDecoration = 'line-through'
-                reservation.style.textDecorationThickness = '4px'
-                reservation.style.textDecorationColor = 'red'
+                let r = document.getElementById(`${i}`)
+                console.log(r)
+                r.className = 'booked'
+                r.style.textDecoration = 'line-through'
+                r.style.textDecorationThickness = '4px'
+                r.style.textDecorationColor = 'red'
 
             }
         }
 
 
         // 3rd scenario: (SIMPLEST) checkin day and checkout day is in same month 
-        if (checkinDateObject.getMonth() + 1 == currentMonth && checkoutDateObject.getMonth() == checkinDateObject.getMonth()) {
+        else if (reservation && checkoutDateObject.getMonth() == checkinDateObject.getMonth()) {
             console.log(checkinDateObject.getMonth())
-
+            console.log("I AM IN BLOCK 3")
             // we start at checkin day and count to checkout day
             for (let i = checkinDay; i <= checkoutDay; i++) {
-                let reservation = document.getElementById(`${i}`)
-                console.log(reservation)
-                reservation.className = 'booked'
-                reservation.style.textDecoration = 'line-through'
-                reservation.style.textDecorationThickness = '4px'
-                reservation.style.textDecorationColor = 'red'
+                let r = document.getElementById(`${i}`)
+                console.log(r)
+                r.className = 'booked'
+                r.style.textDecoration = 'line-through'
+                r.style.textDecorationThickness = '4px'
+                r.style.textDecorationColor = 'red'
 
             }
         }
@@ -354,7 +362,7 @@ async function lookUpAll() {
 
 
 
-lookUpAll();
+// lookUpAll();
 bookReservation();
 
 

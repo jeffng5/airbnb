@@ -26,7 +26,7 @@ export class Helpers {
     }
 
     static async getReservationForCurrentMonthAndYear(month, year) {
-        let res = await this.request(`reservation`, { month, year })
+        let res = await this.request(`reservations`, { month, year }, 'get')
         console.log(res.data)
         return res.data
     }

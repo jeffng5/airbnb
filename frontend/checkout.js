@@ -6,12 +6,17 @@ import axios from 'axios'
 
 
 let id = localStorage.getItem('id')
-let input = JSON.parse(id).idNumber[0].id
+console.log(id)
+// let id = JSON.parse(input).idNumber[0].id
 
 async function getResViaId() {
 
-    let res = await Helpers.getReservationViaId(input)
-    console.log(res.reservation[0].checkin)
+    let res = await Helpers.getReservationViaId(id)
+    console.log(res.reservation)
+
+    let ResId = document.getElementById('id')
+    ResId.innerText = "Res Id: " + id
+
 
     let nameRecord = document.getElementById('name')
     nameRecord.innerText = 'Name: ' +res.reservation[0].firstname+" "+res.reservation[0].lastname
