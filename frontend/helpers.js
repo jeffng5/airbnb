@@ -25,8 +25,8 @@ export class Helpers {
         return ans
     }
 
-    static async getReservationForCurrentMonth(month) {
-        let res = await this.request(`reservation/${month}`)
+    static async getReservationForCurrentMonthAndYear(month, year) {
+        let res = await this.request(`reservation`, { month, year })
         console.log(res.data)
         return res.data
     }
@@ -37,4 +37,11 @@ export class Helpers {
         return res.data
 
     }
+
+    static async sendEmail(id, firstname, lastname, email, checkin, checkout) {
+        let res = await this.request('email', { id, firstname, lastname, email, checkin, checkout }, 'post')
+        console.log(res.data)
+        return res.data
+    }
+
 }
