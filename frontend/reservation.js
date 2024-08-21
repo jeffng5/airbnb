@@ -129,14 +129,6 @@ prenexIcons.forEach(icon => {
 })
 
 
-
-
-
-
-
-
-
-
 // function to book reservation and to check if there is a scheduling conflict
 async function getValues() {
     let firstname = document.getElementById('firstname').value;
@@ -178,7 +170,7 @@ async function getValues() {
             console.log(id)
             // localStorage.removeItem('id')
             localStorage.setItem('id', id)
-            // window.location.href = '/checkout.html'
+            window.location.href = '/checkout.html'
 
 
             let sendE = await Helpers.sendEmail(id, firstname, lastname, email, checkin, checkout)

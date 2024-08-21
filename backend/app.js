@@ -118,12 +118,12 @@ app.get('/checkin', async (req, res, next) => {
 
 app.post('/email', async (req, res, next) => {
     // try {
-    const { ids, firstname, lastname, email, checkin, checkout } = req.body
+    const { id, firstname, lastname, email, checkin, checkout } = req.body
     console.log(req.body)
 
     function sendEmail() {
         // Send an email:
-        var client = new postmark.ServerClient('0f3efca0-18b4-4a0c-8ff3-c63340c38e48');
+        var client = new postmark.ServerClient(CLIENT);
 
         client.sendEmail({
 
@@ -131,7 +131,7 @@ app.post('/email', async (req, res, next) => {
             "From": "jeffrey@black-diamond-escape.us",
             "To": "jeffrey.ng51213@outlook.com",
             "Subject": "You have a booking ",
-            "HtmlBody": `Dear owner. You have a booking, RESERVATION ID: ${ids}, FIRSTNAME: ${firstname}, LASTNAME: ${lastname}, EMAIL: ${email}, CHECKIN: ${checkin}, CHECKOUT: ${checkout}`,
+            "HtmlBody": `Dear owner. You have a booking, RESERVATION ID: ${id}, FIRSTNAME: ${firstname}, LASTNAME: ${lastname}, EMAIL: ${email}, CHECKIN: ${checkin}, CHECKOUT: ${checkout}`,
             "TextBody": `You have a booking. `,
             "MessageStream": "outbound"
 
