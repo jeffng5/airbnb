@@ -44,4 +44,11 @@ export class Helpers {
         return res.data
     }
 
+    static async deleteRes(id) {
+        let res = await this.request('reservation', {id}, 'delete')
+        console.log(res.data)
+        return res.data
+
+    }
+
 }

@@ -1,8 +1,6 @@
 import { Helpers } from './helpers'
 import axios from 'axios'
 
-
-
 let date = new Date();
 console.log(date.getDate())
 let year = date.getFullYear();
@@ -127,8 +125,6 @@ prenexIcons.forEach(icon => {
     });
 })
 
-
-// function to book reservation and to check if there is a scheduling conflict
 async function getValues() {
     let firstname = document.getElementById('firstname').value;
     let lastname = document.getElementById('lastname').value;
@@ -170,11 +166,6 @@ async function getValues() {
             // localStorage.removeItem('id')
             localStorage.setItem('id', id)
             window.location.href = '/checkout.html'
-
-
-            let sendE = await Helpers.sendEmail(id, firstname, lastname, email, checkin, checkout)
-
-
 
 
         }
@@ -232,16 +223,13 @@ async function getValues() {
     }
     //calling above function
     checkForOverlap()
-
+    
 }
 
-// function with eventListener to book 
-async function bookReservation() {
+async function goToFinalizePage(){
     let button = document.getElementById('reserve')
-    console.log(button)
-    button.addEventListener('click', function (e) { e.preventDefault(); getValues(); })
+    button.addEventListener('click', function(e) {e.preventDefault(); getValues() })
 }
-
 
 //this function marks up all the reservations in the database that have been reserved on the calendar
 async function lookUpAll() {
@@ -385,6 +373,5 @@ async function lookUpAll() {
 
 
 lookUpAll();
-bookReservation();
-
+goToFinalizePage();
 

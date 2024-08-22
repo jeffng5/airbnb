@@ -141,6 +141,20 @@ app.post('/email', async (req, res, next) => {
     sendEmail();
 })
 
+app.delete('/reservation', async (req,res, next)=> {
+    try{
+        const { id } = req.body
+        console.log(id, req.body)
+        const result = await db.query(`DELETE FROM reservations WHERE id = $1`, [id]);
 
+        console.log(result, 'record delete successful')
+    } catch(e) {
+        console.log(e)
+        return res.status(500).json({error: e})
+    }
+
+
+
+})
 
 module.exports = app;
