@@ -171,3 +171,18 @@ button {
  
 }
 
+.webmaster {
+    font-size: 10px;
+}
+
+form {
+    text-align: center;
+}
+
+.secret-submit {
+    text-align: center;
+    color:black;
+    background-color: white;
+    border-radius: 4px;
+    width: 200px;
+}

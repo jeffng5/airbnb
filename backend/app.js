@@ -152,9 +152,6 @@ app.delete('/reservation', async (req,res, next)=> {
         console.log(e)
         return res.status(500).json({error: e})
     }
-
-
-
 })
 
 module.exports = app;

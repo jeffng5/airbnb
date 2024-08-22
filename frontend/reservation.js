@@ -1,5 +1,5 @@
 import { Helpers } from './helpers'
-import axios from 'axios'
+
 
 let date = new Date();
 console.log(date.getDate())
