@@ -50,5 +50,12 @@ export class Helpers {
         return res.data
 
     }
+    static async login(password) {
+        let res = await this.request('password', { password })
+        console.log(res)
+        sessionStorage.setItem("token", res.data.token)
 
+        return res.data
+
+    }
 }

@@ -173,6 +173,7 @@ button {
 
 .webmaster {
     font-size: 10px;
+    color: black;
 }
 
 form {
@@ -185,4 +186,8 @@ form {
     background-color: white;
     border-radius: 4px;
     width: 200px;
+}
+
+#zone {
+    font-size: 25px;
 }

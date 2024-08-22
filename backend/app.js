@@ -3,12 +3,14 @@ var postmark = require("postmark");
 const app = express();
 const cors = require("cors")
 const CLIENT = process.env.EMAIL
+
+const bcrypt = require('bcrypt')
 console.log(CLIENT)
 
 require('dotenv').config()
 app.use(express.json());
 app.use(cors());
-
+const { createToken } = require('./helpers/tokens')
 
 const handleCors = (req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -151,6 +153,46 @@ app.delete('/reservation', async (req,res, next)=> {
     } catch(e) {
         console.log(e)
         return res.status(500).json({error: e})
+    }
+})
+
+app.get('/password', async (req, res, next)=> {
+    try {
+        const { password } = req.query
+        console.log("password", password)
+        
+
+        const results = await db.query(
+            `SELECT password from passwordz WHERE id = $1`, [1]) 
+        console.log(results[0].password)
+        const pwd = results[0].password;
+        
+        console.log('pwd', pwd)
+        
+        if (pwd) {
+           
+            if (bcrypt.compare(pwd, password)){
+               
+                const user = 'Gina'
+               
+                const token = createToken(user)
+              
+                let result = res.status(201).json({user, token})
+              
+                console.log("success!")
+                return result
+            }
+            else {
+                console.log('Faulty password')
+                // let ans = res.status(401).json({error : 'Password incorrect.'})
+            }
+        
+        if (!password) { return alert('Please go back to main screen')
+
+        }
+    }
+    } catch(e) {
+        return res.status(400).json({error: 'Password incorrect please go back to main screen.'})
     }
 })
 

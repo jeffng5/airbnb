@@ -7,3 +7,8 @@ CREATE TABLE IF NOT EXISTS reservations (
     checkout DATE NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS passwordz (
+    id BIGSERIAL PRIMARY KEY,
+    passwordz TEXT NOT NULL
+)
+

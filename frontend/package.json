@@ -17,8 +17,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "aws-sdk": "^2.1680.0",
     "axios": "^1.7.4",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "lodash": "^4.17.21",
-    "parcel-reporter-static-files-copy": "^1.5.3"
+    "nock": "^13.5.5",
+    "parcel-reporter-static-files-copy": "^1.5.3",
+    "postmark": "^4.0.5"
   }
 }
