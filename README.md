@@ -19,6 +19,5 @@ checking for booking conflicts, past date on booking, and makes reservations tha
 The user lands on homepage and has options to read about Airbnb rental. User can view gallery, read testimonials, contact host via email, and book a reservation. 
 This app is designed to be a small app with minimal routing. Upon clicking on make reservation, user will be directed to a reservation page which has a full year calendar
 The calendar displays all the bookings and has feature to scroll through a month at a time. There is also a reservation form that can be submitted into backend database.
-Finally if there are no booking conflicts, user is directed to Stripe API to pay for booking. Stripe API is not functional yet since owner's info has not been updated 
-yet.
+Finally if there are no booking conflicts, user is directed to Stripe API to pay for booking. When the user submits a reservation, he/she is taken to a screen where their info is displayed. Here the user can approve a final time or change his/her mind. **UPDATED** The payment system will include an auto-mailer to the property owner. The property owner will bill with a Stripe invoice sent to renter's provided email address. 
 
