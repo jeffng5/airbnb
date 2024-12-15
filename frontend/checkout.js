@@ -1,14 +1,17 @@
 import { Helpers } from './helpers'
+import { getLengthOfStay } from './middleWare/getLengthOfStay'
 
 let id = localStorage.getItem('id')
 console.log(id)
-// let id = JSON.parse(input).idNumber[0].id
+
+let stay = localStorage.getItem('lengthOfStay')
 
 async function getResViaId() {
 
     let res = await Helpers.getReservationViaId(id)
     console.log(res.reservation)
 
+    let stayDuration = getLengthOfStay(res.reservation[0].checkin.slice(0,10), res.reservation[0].checkout.slice(0,10))
 
     let idRes = document.getElementById('id')
     idRes.innerText = 'Res Id: ' + id
@@ -24,8 +27,13 @@ async function getResViaId() {
 
     let record = document.getElementById('checkin-ref')
     record.innerText = 'Checkin: ' + res.reservation[0].checkin.slice(0, 10)
+
     let record1 = document.getElementById('checkout-ref')
     record1.innerText = 'Checkout: ' + res.reservation[0].checkout.slice(0, 10)
+   
+
+    let stayLength = document.getElementById('length-of-stay')
+    stayLength.innerText = 'Length of Stay: ' + stayDuration
 
     let record3 = document.getElementById('nightly-rate')
     record3.innerText = 'Nightly Rate: ' + '$175'
@@ -33,8 +41,9 @@ async function getResViaId() {
     // CONFIRM BOOKING
 
     function returnToIndexPage() {
-        setTimeout(()=>{return alert('Email has been sent. You will be redirected.')}, 500)
-        setTimeout(()=> {window.location.href= '/index.html'}, 4000)
+        setTimeout(()=>{return alert('Stripe invoice has been sent to email on file. You will be redirected to homepage.')}, 500)
+        setTimeout(()=>{window.location.href='/index.html'}, 4000)
+    
     }
 
     let firstname = res.reservation[0].firstname
@@ -48,9 +57,13 @@ async function getResViaId() {
     async function confirmBooking() {
         let sendE = await Helpers.sendEmail(id, firstname, lastname, email, checkin, checkout)
         console.log(sendE, 'Email sent')
+
+        
     }
+
+    
     let confirmationButton = document.getElementById('confirmation')
-    console.log(confirmationButton)
+  
     confirmationButton.addEventListener('click', function (e) { e.preventDefault(); confirmBooking(); returnToIndexPage() })
 }
 
@@ -68,7 +81,6 @@ function returnToReservationPage() {
 
 let button = document.getElementById('delete-reservation')
 button.addEventListener('click', function (e) { e.preventDefault(); deleteReservation(); returnToReservationPage() })
-
 
 
 

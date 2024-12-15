@@ -58,4 +58,13 @@ export class Helpers {
         return res.data
 
     }
+
+    static async checkoutSession(quantity) {
+        console.log('Jeff', quantity)
+        let res = await this.request('v1.payment_intents',  { quantity } , 'post')
+        console.log('HERE I AM', res)
+        return res
+    }
+
+
 }

@@ -1,36 +1,40 @@
 const express = require('express');
-var postmark = require("postmark");
+const postmark = require("postmark");
 const app = express();
 const cors = require("cors")
-const CLIENT = process.env.EMAIL
+
 
 const bcrypt = require('bcrypt')
-console.log(CLIENT)
+
 
 require('dotenv').config()
 app.use(express.json());
 app.use(cors());
+app.use(express.static('public'));
 const { createToken } = require('./helpers/tokens')
 
-const handleCors = (req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-};
+// const handleCors = (req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "*");
+//     next();
+// };
 
 const path = require('path')
 app.use('/static', express.static(path.join(__dirname, 'frontend')))
 
-
-app.use(handleCors)
+// app.use(handleCors)
 
 const password = process.env.PASSWORD
 const PORT = process.env.DATABASE_PORT
 const USER = process.env.USER
+const CLIENT = process.env.EMAIL
+const STRIPE = process.env.STRIPE
+const YOUR_DOMAIN = process.env.YOUR_DOMAIN
 
 const pgp = require('pg-promise')(/* options */)
 const db = pgp(`postgresql://${USER}:${password}@127.0.0.1:${PORT}/postgres`)
 
+const stripe = require('stripe')(STRIPE);
 
 /////////////////////////////// BASIC ROUTES ///////////////////////////// 
 
@@ -123,6 +127,17 @@ app.post('/email', async (req, res, next) => {
     const { id, firstname, lastname, email, checkin, checkout } = req.body
     console.log(req.body)
 
+    let date1 = new Date(checkin.toString());
+    let date2 = new Date(checkout.toString());
+
+    let Difference_In_Time = date2.getTime() - date1.getTime();
+
+    let date_diff = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+
+    const quantity = date_diff
+
+    console.log(date_diff, ' was calculated')
+
     function sendEmail() {
         // Send an email:
         var client = new postmark.ServerClient(CLIENT);
@@ -133,7 +148,7 @@ app.post('/email', async (req, res, next) => {
             "From": "jeffrey@black-diamond-escape.us",
             "To": "jeffrey.ng51213@outlook.com",
             "Subject": "You have a booking",
-            "HtmlBody": `Dear owner. You have a booking, RESERVATION ID: ${id}, FIRSTNAME: ${firstname}, LASTNAME: ${lastname}, EMAIL: ${email}, CHECKIN: ${checkin}, CHECKOUT: ${checkout}`,
+            "HtmlBody": `Dear owner. You have a booking, RESERVATION ID: ${id}, FIRSTNAME: ${firstname}, LASTNAME: ${lastname}, EMAIL: ${email}, CHECKIN: ${checkin}, CHECKOUT: ${checkout}...Stay duration, ${quantity}`, 
             "TextBody": `You have a booking. `,
             "MessageStream": "outbound"
 
@@ -195,5 +210,26 @@ app.get('/password', async (req, res, next)=> {
         return res.status(400).json({error: 'Password incorrect please go back to main screen.'})
     }
 })
+
+app.post('/create-checkout-session', async(req, res) => {
+
+    const { quantity } = req.body
+    console.log('this is the quantity', quantity)
+
+
+    const session = await stripe.checkout.sessions.create({
+        line_items: [
+            {
+                price: 'price_1QVz0DChg3YLxEh24Bgj6wfs',
+                quantity: quantity,
+            }
+        ],
+        mode: 'payment',
+        success_url: `${YOUR_DOMAIN}/success.html`, cancel_url: `${YOUR_DOMAIN}/cancel.html`,
+        automatic_tax: {enabled: true},
+    });
+    res.redirect(303, session.url);
+})
+
 
 module.exports = app;
