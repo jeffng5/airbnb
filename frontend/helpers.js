@@ -46,15 +46,13 @@ export class Helpers {
 
     static async deleteRes(id) {
         let res = await this.request('reservation', {id}, 'delete')
-        console.log(res.data)
-        return res.data
+        console.log(res)
+        return res
 
     }
     static async login(password) {
         let res = await this.request('password', { password })
-        console.log(res)
-        sessionStorage.setItem("token", res.data.token)
-
+        console.log(res.data)
         return res.data
 
     }

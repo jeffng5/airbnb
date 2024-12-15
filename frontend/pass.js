@@ -13,15 +13,17 @@ import { Helpers } from './helpers'
 
 
 
-function matchPassword() {
+async function matchPassword() {
     let password = document.getElementById('zone').value
 
   
-    let res = Helpers.login(password)
-    let token = sessionStorage.getItem('token')
-    console.log(token)
+    let res = await Helpers.login(password)
+    console.log(res)
 
-    if (token) {
+    // let token = localStorage.getItem('token')
+    // console.log(token)
+
+    if (res.user && res.token) {
         window.location.href = 'editRes.html'
     }
 

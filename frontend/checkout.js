@@ -46,8 +46,8 @@ async function getResViaId() {
     
     }
 
-    let firstname = res.reservation[0].firstname
-    let lastname = res.reservation[0].lastname
+    let firstname = res.reservation[0].firstname;
+    let lastname = res.reservation[0].lastname;
     let email = res.reservation[0].email;
     let checkin = res.reservation[0].checkin.slice(0, 10);
     let checkout = res.reservation[0].checkout.slice(0, 10);
