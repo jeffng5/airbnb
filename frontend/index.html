@@ -5,43 +5,48 @@
     <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
     <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
     <link rel="stylesheet" type="text/css" href="../frontend/static/style.css">
-   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Noto+Sans+JP&family=Pacifico&family=Permanent+Marker&family=Playwrite+DE+VA+Guides&family=Roboto+Condensed&display=swap" rel="stylesheet">
+
 </head>
 
 
 
-    
-  
+
+
 <body>
     <p>
         Welcome to Black Diamond Escape
     </p>
-    <p><a href="pass.html" class ='webmaster'>Mailer@daemon</a>
+    <p><a href="pass.html" class='webmaster'>Mailer@daemon</a>
     </p>
 
     <div class="column">
+        <h2 class="gallery" style="display: none;"></h2>
+
         <img src="./static/images/exterior.png" alt="exterior" width="600" height="700" />
 
-        
-    <div class="button">
-        <div>
-            <button>ABOUT</button>
+
+        <div class="button">
+            <div>
+                <button>ABOUT</button>
+            </div>
+            <div>
+
+                <button><a href='reservation.html'>RESERVATION</a></button>
+            </div>
+            <div>
+                <button>GALLERY</button>
+            </div>
+            <div>
+                <button>REVIEWS</button>
+
+            </div>
+            <div>
+                <button>LEAVE A REVIEW</button>
+            </div>
         </div>
-        <div>
-    
-        <button><a href='reservation.html'>RESERVATION</a></button>
-        </div>
-        <div>
-            <button>GALLERY</button>
-        </div>
-        <div>
-            <button>REVIEWS</button>
-            
-        </div>
-        <div>
-            <button>CONTACT US</button>
-        </div>
-    </div>
     </div>
     <h1 class='about' style="display: none;">Welcome to Black Diamond Escape - a charming 3 bedroom, 2 bathroom rental
         for your Catskill Mountain getaway offering breathtaking views of the great outdoors! It's recently renovated,
@@ -50,36 +55,37 @@
         nearby many local attractions, it’s an amazing escape exploring all that the area has to offer.
     </h1>
 
-    <h2 class="gallery" style="display: none;"></h2>
-    <h2 class= "reviews" style="display: none;"></h2>
 
-  
+    <h2 class="reviews" style="display: none;"></h2>
+
+
 
     <div class='form-for-email' style="display: none;">
-        <h2>CONTACT US</h2>
+        <h2>LEAVE A REVIEW</h2>
         <form action="mailto:gina.valmoria@gmail.com" method="post" enctype="text/plain">
-    <h2>Name</h2>
-    <input class= 'form' type="text" name="name" size='50'><br>
-    <h2>E-mail</h2>
-    <input class= 'form' type="text" name="mail" size="50"><br>
-    <h2>Message</h2>
-    <textarea class= 'form' type="text" name="Message" rows="9" cols="80"></textarea>
-    
-    <div class="submission">
-    <input class= 'contact-submit' id= "form" type="submit" value="Send">
-    <input class= 'contact-submit' id= 'form' type="reset" value="Reset">   
-    </div>
-    </form>
+            <h2>Name</h2>
+            <input class='form' type="text" name="name" size='50'><br>
+            <h2>E-mail</h2>
+            <input class='form' type="text" name="mail" size="50"><br>
+            <h2>Message</h2>
+            <textarea class='form' type="text" name="Message" rows="9" cols="80"></textarea>
+
+            <div class="submission">
+                <input class='contact-submit' id="form" type="submit" value="Send">
+                <input class='contact-submit' id='form' type="reset" value="Reset">
+            </div>
+        </form>
     </div>
 
 
 
 </body>
+
 </html>
 
 
 
-<script src="gallery.js" type="module"></script>
+<script src="gallery.js"></script>
 <script src="about.js"></script>
 <script src="reviews.js"></script>
 <script src="reservation.js"></script>

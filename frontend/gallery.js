@@ -1,6 +1,6 @@
 
 const galleryArr = [
-    'backyard.png', 'bedroom.png', 'bedroom1.png', 'diningroom.png',
+    'backyard.jpg', 'bedroom.png', 'bedroom1.png', 'diningroom.png',
     'foyer.png', 'gameroom.png', 'gameroom2.png', 'kitchen.png', 'kitchen-coffee.png', 'livingroom.png', 'patio.png', 'patio1.png'
 ];
 
@@ -20,10 +20,14 @@ function createGallery() {
 
 
 function mountPic(imageName) {
-    const img = document.createElement('img');
     let h2 = document.getElementsByTagName('h2')
+    const img = document.createElement('img');
+    
     // img.innerHTML += `onclick="toggleEnlarged(img)"`
-    img.src = new URL('images/'+ imageName, import.meta.url);
+    // img.src = new URL(`./static/images/${imageName}`, import.meta.url);
+    let imageURL = `images/${imageName}`  
+    img.src = imageURL
+    img.alt = `${imageName}`.slice(0,-4)
     img.classList.add("enlarged")
     img.addEventListener('click', function (e) {
         e.preventDefault();

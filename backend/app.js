@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors")
 
 
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 
 require('dotenv').config()
@@ -41,9 +41,9 @@ const stripe = require('stripe')(STRIPE);
 app.get('/reservations', async (req, res, next) => {
     const monthToNumber = { 'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12 }
     try {
-    const { month, year } = req.query
-  
-        
+        const { month, year } = req.query
+
+
         console.log(req.query)
         console.log('month', month)
         console.log('year', year)
@@ -77,7 +77,7 @@ app.get('/reservations', async (req, res, next) => {
     }
     catch (e) {
         console.log(e)
-        return res.status(500).json({error: e})
+        return res.status(500).json({ error: e })
     }
 
 }
@@ -148,7 +148,7 @@ app.post('/email', async (req, res, next) => {
             "From": "jeffrey@black-diamond-escape.us",
             "To": "jeffrey.ng51213@outlook.com",
             "Subject": "You have a booking",
-            "HtmlBody": `Dear owner. You have a booking, RESERVATION ID: ${id}, FIRSTNAME: ${firstname}, LASTNAME: ${lastname}, EMAIL: ${email}, CHECKIN: ${checkin}, CHECKOUT: ${checkout}...Stay duration, ${quantity}`, 
+            "HtmlBody": `Dear owner. You have a booking, RESERVATION ID: ${id}, FIRSTNAME: ${firstname}, LASTNAME: ${lastname}, EMAIL: ${email}, CHECKIN: ${checkin}, CHECKOUT: ${checkout}...Stay duration, ${quantity}`,
             "TextBody": `You have a booking. `,
             "MessageStream": "outbound"
 
@@ -158,60 +158,55 @@ app.post('/email', async (req, res, next) => {
     sendEmail();
 })
 
-app.delete('/reservation', async (req,res, next)=> {
-    try{
+app.delete('/reservation', async (req, res, next) => {
+    try {
         const { id } = req.body
         console.log(id, req.body)
         const result = await db.query(`DELETE FROM reservations WHERE id = $1`, [id]);
 
         console.log(result, 'record delete successful')
-    } catch(e) {
+    } catch (e) {
         console.log(e)
-        return res.status(500).json({error: e})
+        return res.status(500).json({ error: e })
     }
 })
 
-app.get('/password', async (req, res, next)=> {
-    try {
-        const { password } = req.query
-        console.log("password", password)
-        
+app.get('/password', async (req, res, next) => {
 
-        const results = await db.query(
-            `SELECT password from passwordz WHERE id = $1`, [1]) 
-        console.log(results[0].password)
-        const pwd = results[0].password;
-        
-        console.log('pwd', pwd)
-        
-        if (pwd) {
-           
-            if (bcrypt.compare(pwd, password)){
-               
-                const user = 'Gina'
-               
-                const token = createToken(user)
-              
-                let result = res.status(201).json({user, token})
-              
-                console.log("success!")
-                return result
-            }
-            else {
-                console.log('Faulty password')
-                // let ans = res.status(401).json({error : 'Password incorrect.'})
-            }
-        
-        if (!password) { return alert('Please go back to main screen')
+    const { password } = req.query
+    console.log("password", password)
 
+    const id = 2
+    const results = await db.query(
+        `SELECT password from passwordz WHERE id = $1`, [id])
+    console.log(results[0].password)
+    const pwd = results[0].password;
+
+    console.log('pwd', pwd)
+
+
+    await bcrypt.compare(password, pwd).then(match => {
+        if (match) {
+            const user = 'Gina'
+            const token = createToken(user)
+
+            let result = res.status(201).json({ user, token })
+
+            console.log('password matches!')
+            return result
+        } else {
+            res.redirect('index.html')
+            console.log("PASSWORD ERROR")
+            
         }
-    }
-    } catch(e) {
-        return res.status(400).json({error: 'Password incorrect please go back to main screen.'})
-    }
-})
 
-app.post('/create-checkout-session', async(req, res) => {
+    }
+    )
+}
+);
+;
+
+app.post('/create-checkout-session', async (req, res) => {
 
     const { quantity } = req.body
     console.log('this is the quantity', quantity)
@@ -226,10 +221,10 @@ app.post('/create-checkout-session', async(req, res) => {
         ],
         mode: 'payment',
         success_url: `${YOUR_DOMAIN}/success.html`, cancel_url: `${YOUR_DOMAIN}/cancel.html`,
-        automatic_tax: {enabled: true},
+        automatic_tax: { enabled: true },
     });
     res.redirect(303, session.url);
 })
 
 
-module.exports = app;
+module.exports = app
