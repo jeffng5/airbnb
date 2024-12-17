@@ -34,7 +34,6 @@ const YOUR_DOMAIN = process.env.YOUR_DOMAIN
 const pgp = require('pg-promise')(/* options */)
 const db = pgp(`postgresql://${USER}:${password}@127.0.0.1:${PORT}/postgres`)
 
-const stripe = require('stripe')(STRIPE);
 
 /////////////////////////////// BASIC ROUTES ///////////////////////////// 
 

@@ -1,81 +1,7 @@
-@media (min-width: 480) and (max-width: 600px) {
-    body {
-        background-color: black;
-        text-align: center;
-        color: white;
-        font-family: "Edu AU VIC WA NT Pre", cursive;
-        font-weight: 400;
-        font-style: normal;
-        font-size: 1em;
-    }
-
-    h1 {
-        color: white;
-        font-family: "Edu AU VIC WA NT Pre", cursive;
-        font-weight: 400;
-        font-style: normal;
-    }
-
-    h2 {
-        color: white;
-        font-size: 2em;
-        text-align: center;
-        font-family: "Edu AU VIC WA NT Pre", cursive;
-        font-weight: 400;
-        font-style: normal;
-    }
-
-    .form-for-email {
-        border-radius: 1em;
-        margin-left: 5em;
-        margin-right: 5em;
-        border: 2px white solid;
-        padding-bottom: 1em;
-        margin-top: 1em;
-        text-align: center;
-        display: block;
-    
-    }
-
-    .gallery {
-        display: block;
-        float: left;
-        width: 100%;
-        /* margin-left: 0px;
-        margin-right: 0px;
-        margin-top: 0px;
-        padding-bottom: 0px; */
-        text-align: left;
-        font-family: "Edu AU VIC WA NT Pre", cursive;
-        font-optical-sizing: auto;
-        font-weight: 400;
-        font-style: normal;
-    }
-
-    .column {
-        width: 100%;
-        /* margin-left: auto;
-        margin-right: auto; */
-        display: inline-flex;
-        text-align: center;
-    }
-
-    img {
-        height: 35em;
-        width: auto;
-        border-radius: 1em;
-    }
- 
-    p {
-        font-size: 1em;
-    }
-}
-
 body {
     background-color: salmon;
     text-align: center;
 }
-
 
 
 .edu-au-vic-wa-nt-pre-mystery {
@@ -122,11 +48,6 @@ h2 {
     text-align: center;
     display: block;
 
-}
-
-#form {
-    margin-top: 20px;
-    margin-right: 600px;
 }
 
 .gallery {
@@ -249,12 +170,13 @@ button {
 
 .about {
     padding-bottom: 10px;
-    margin-left: 340px;
-    margin-right: 340px;
+    margin-left: 15px;
+    margin-right: 15px;
     font-family: "Edu AU VIC WA NT Pre", cursive;
-    font-optical-sizing: auto;
+    font-size: 18px;
     font-weight: 400;
     font-style: normal;
+    color: white;
 }
 
 .contact-submit {
@@ -263,9 +185,10 @@ button {
     font-size: 14px;
     background-color: forestgreen;
     color: white;
-    border-radius: 6px;
-    position: relative;
-    left: 300px;
+    border-radius: 10px;
+    align-items: center;
+    margin-top: 20px;
+    
 }
 
 .details {
@@ -282,12 +205,18 @@ button {
 }
 
 .webmaster {
-    font-size: 10px;
+    position: absolute;
+    top: 10px;
+    right: 1000px;
+    font-size: 5px;
     color: salmon;
 }
 
-form {
-    text-align: center;
+.form {
+    text-align: left;
+    font-family: Georgia;
+    background-color: wheat;
+    color: black;
 }
 
 .secret-submit {
@@ -302,4 +231,110 @@ form {
     font-size: 25px;
 }
 
+.contact-submit {
+    text-align: center;
+    align-items: center;
+    font-family: "Edu AU VIC WA NT Pre", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
 
+@media(max-width: 600px) {
+    body {
+        background-color: salmon;
+        text-align: center;
+        color: white;
+        font-family: "Edu AU VIC WA NT Pre", cursive;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 1em;
+    }
+
+    h1 {
+        color: white;
+        font-family: "Edu AU VIC WA NT Pre", cursive;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 15px;
+    }
+
+    h2 {
+        color: white;
+        font-size: 15px;
+        text-align: center;
+        font-family: "Edu AU VIC WA NT Pre", cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .form-for-email {
+        align-items: center;
+        border-radius: 16px;
+        margin-left: 15px;
+        margin-right: 15px;
+        border: 2px white solid;
+        padding-bottom: 15px;
+        margin-top: 15px;
+        text-align: center;
+        display: block;
+        font-family: "Edu AU VIC WA NT Pre", cursive;
+        font-weight: 400;
+        font-style: normal;
+    
+    }
+
+    .gallery {
+        display: block;
+        float: left;
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-top: 0px;
+        padding-bottom: 0px; 
+        text-align: left;
+        font-family: "Edu AU VIC WA NT Pre", cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .column {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        text-align: center;
+        align-items: center;
+    }
+
+    img {
+        height: 250px;
+        width: auto;
+        border-radius: 1em;
+        text-align: center;
+    }
+ 
+    p {
+        font-size: 38px;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+   button {
+    font-size: 20px;
+    font-family: "Edu AU VIC WA NT Pre", cursive;
+    font-weight: 400;
+    font-style: normal;
+    color: white;
+   }
+
+   .button {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+   }
+
+   .abput {
+    font-size: 15px;
+    color: white;
+   }
+}
